@@ -46,6 +46,10 @@ jobs:
     - name: List directory structure
       run: ls -R
 
+    # Step 9: Run PHPCS for linting (adjust path based on actual folder)
+    - name: Run PHPCS for linting
+      run: vendor/bin/phpcs --standard=PSR12 --report=full squizlabs/php_codesniffer/src/
+
   web-deploy:
     name: Deploy
     needs: web-build
