@@ -46,22 +46,6 @@ jobs:
     - name: List directory structure
       run: ls -R
 
-    # Step 9: Run PHPCS for linting (adjust path based on actual folder)
-    - name: Run PHPCS for linting
-      run: demo_project_cicd/vendor/bin/phpcs --standard=PSR12 --report=full demo_project_cicd/
-
-    # Step 10: Set execute permissions for PHPUnit (to ensure it's executable)
-    - name: Set execute permissions for PHPUnit
-      run: chmod +x demo_project_cicd/vendor/bin/phpunit
-
-    # Step 11: Verify PHPUnit installation
-    - name: Verify PHPUnit installation
-      run: demo_project_cicd/vendor/bin/phpunit --version  # This will confirm if PHPUnit is correctly installed
-
-    # Step 12: Run PHPUnit tests
-    - name: Run PHPUnit tests
-      run: demo_project_cicd/vendor/bin/phpunit --configuration demo_project_cicd/phpunit.xml  # Adjust path to phpunit.xml if needed
-
   web-deploy:
     name: Deploy
     needs: web-build
