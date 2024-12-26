@@ -39,7 +39,11 @@ jobs:
     - name: Run PHPCS for linting
       run: vendor/bin/phpcs --standard=PSR12 src/
 
-    # Step 7: Run PHPUnit tests
+    # Step 7: Ensure PHPUnit has the correct permissions to run
+    - name: Set execute permissions for PHPUnit
+      run: chmod +x vendor/bin/phpunit
+
+    # Step 8: Run PHPUnit tests
     - name: Run PHPUnit tests
       run: |
         vendor/bin/phpunit --configuration phpunit.xml
