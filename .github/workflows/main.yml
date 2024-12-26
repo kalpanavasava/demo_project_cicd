@@ -11,20 +11,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    # Step 1: Checkout the code
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
+    # Step 2: Set up PHP (with necessary extensions)
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.2' 
-        extensions: mbstring, intl, bcmath, mysqli
+        php-version: '8.2'
+        extensions: mbstring, intl, bcmath  # Optional: Add other extensions if needed
 
-    # - name: Run PHPCS for linting
-    #   run: |
-    #     vendor/bin/phpcs --standard=PSR12 src/  # Specify your folder (src/) and the coding standard
-    #   continue-on-error: false
+    # Step 3: Install Composer globally (ensure it's available for the current workflow)
+    - name: Install Composer globally
+      run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+    # Step 4: Install Composer dependencies (including PHPUnit)
+    - name: Install Composer dependencies
+      run: composer install --no-progress --prefer-dist
+
+    # Step 5: Check PHPUnit installation (optional, just for verification)
+    - name: Verify PHPUnit installation
+      run: |
+        vendor/bin/phpunit --version  # This will confirm if PHPUnit is correctly installed
+
+    # Step 6: Run PHPCS for linting
+    - name: Run PHPCS for linting
+      run: vendor/bin/phpcs --standard=PSR12 src/
+
+    # Step 7: Run PHPUnit tests
     - name: Run PHPUnit tests
       run: |
         vendor/bin/phpunit --configuration phpunit.xml
