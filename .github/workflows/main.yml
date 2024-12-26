@@ -44,11 +44,11 @@ jobs:
 
     # Step 8: List directory structure to debug paths (optional)
     - name: List directory structure
-      run: ls -R  # This helps to check if 'src/' exists
+      run: ls -R  # This helps to check if 'src/' exists or find the correct path
 
-    # Step 9: Run PHPCS for linting
+    # Step 9: Run PHPCS for linting (adjust path based on actual folder)
     - name: Run PHPCS for linting
-      run: vendor/bin/phpcs --standard=PSR12 src/
+      run: vendor/bin/phpcs --standard=PSR12 src/  # Adjust this path if necessary
 
     # Step 10: Set execute permissions for PHPUnit (to ensure it's executable)
     - name: Set execute permissions for PHPUnit
@@ -63,15 +63,15 @@ jobs:
       run: vendor/bin/phpunit --configuration phpunit.xml
 
   web-deploy:
-    name: 🎉 Deploy
+    name: Deploy
     needs: web-build
     runs-on: ubuntu-latest
     
     steps:
-    - name: 🚚 Get latest code
+    - name: Get latest code
       uses: actions/checkout@v2
     
-    - name: 📂 Sync files to server
+    - name: Sync files to server
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: voidek.in
