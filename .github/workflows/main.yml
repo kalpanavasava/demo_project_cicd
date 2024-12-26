@@ -32,13 +32,11 @@ jobs:
 
     # Step 5: Install PHP_CodeSniffer (PHPCS)
     - name: Install PHP_CodeSniffer (PHPCS)
-      run: |
-        cd demo_project_cicd  # Ensure we're in the correct directory
-        composer require --dev squizlabs/php_codesniffer
+      run: composer require --dev squizlabs/php_codesniffer
 
     # Step 6: Set execute permissions for PHPCS (to avoid permission issues)
     - name: Set execute permissions for PHPCS
-      run: chmod +x demo_project_cicd/vendor/bin/phpcs
+      run: chmod +x vendor/bin/phpcs
 
     # Step 7: Verify PHPCS installation
     - name: Verify PHPCS installation
