@@ -28,9 +28,7 @@ jobs:
 
     # Step 4: Install Composer dependencies (including PHPUnit and PHPCS)
     - name: Install Composer dependencies
-      run: |
-        cd demo_project_cicd  # Navigate to the directory with composer.json
-        composer install --no-progress --prefer-dist --verbose
+      run: composer install --no-progress --prefer-dist --verbose
 
     # Step 5: Install PHP_CodeSniffer (PHPCS)
     - name: Install PHP_CodeSniffer (PHPCS)
