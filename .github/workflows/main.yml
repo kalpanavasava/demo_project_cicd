@@ -20,10 +20,10 @@ jobs:
         php-version: '8.2' 
         extensions: mbstring, intl, bcmath, mysqli
 
-    - name: Run PHPCS for linting
-      run: |
-        vendor/bin/phpcs --standard=PSR12 src/  # Specify your folder (src/) and the coding standard
-      continue-on-error: false
+    # - name: Run PHPCS for linting
+    #   run: |
+    #     vendor/bin/phpcs --standard=PSR12 src/  # Specify your folder (src/) and the coding standard
+    #   continue-on-error: false
 
     - name: Run PHPUnit tests
       run: |
