@@ -1,3 +1,8 @@
+<?php 
+
+echo "Hello Voidek Webolutions!"
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
