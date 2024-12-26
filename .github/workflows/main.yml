@@ -42,11 +42,15 @@ jobs:
     - name: Verify PHPUnit installation
       run: vendor/bin/phpunit --version  # This will confirm if PHPUnit is correctly installed
 
-    # Step 8: Run PHPCS for linting
+    # Step 8: List directory structure to debug paths
+    - name: List directory structure
+      run: ls -R  # This helps to check if 'src/' exists
+
+    # Step 9: Run PHPCS for linting
     - name: Run PHPCS for linting
       run: vendor/bin/phpcs --standard=PSR12 src/
 
-    # Step 9: Run PHPUnit tests
+    # Step 10: Run PHPUnit tests
     - name: Run PHPUnit tests
       run: vendor/bin/phpunit --configuration phpunit.xml
 
