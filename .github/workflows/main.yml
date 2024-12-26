@@ -6,9 +6,19 @@ on:
       - main  # Deploy when changes are pushed to the main branch
 
 jobs:
+  web-build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
   web-deploy:
     name: 🎉 Deploy
+    needs: web-build
     runs-on: ubuntu-latest
+    
     steps:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
