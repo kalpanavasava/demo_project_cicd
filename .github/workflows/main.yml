@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout the code
+    # Step 1: Checkout the repository code
     - name: Checkout repository
       uses: actions/checkout@v2
 
@@ -28,39 +28,43 @@ jobs:
 
     # Step 4: Install Composer dependencies (including PHPUnit and PHPCS)
     - name: Install Composer dependencies
-      run: composer install --no-progress --prefer-dist --verbose
+      run: |
+        cd demo_project_cicd  # Navigate to the directory with composer.json
+        composer install --no-progress --prefer-dist --verbose
 
     # Step 5: Install PHP_CodeSniffer (PHPCS)
     - name: Install PHP_CodeSniffer (PHPCS)
-      run: composer require --dev squizlabs/php_codesniffer
+      run: |
+        cd demo_project_cicd  # Ensure we're in the correct directory
+        composer require --dev squizlabs/php_codesniffer
 
     # Step 6: Set execute permissions for PHPCS (to avoid permission issues)
     - name: Set execute permissions for PHPCS
-      run: chmod +x vendor/bin/phpcs
+      run: chmod +x demo_project_cicd/vendor/bin/phpcs
 
     # Step 7: Verify PHPCS installation
     - name: Verify PHPCS installation
-      run: vendor/bin/phpcs --version  # This will confirm if PHPCS is correctly installed
+      run: demo_project_cicd/vendor/bin/phpcs --version  # This will confirm if PHPCS is correctly installed
 
     # Step 8: List directory structure to debug paths (optional)
     - name: List directory structure
-      run: ls -R  # This helps to check if 'src/' exists or find the correct path
+      run: ls -R demo_project_cicd  # Check the contents of the demo_project_cicd folder to find your PHP files
 
     # Step 9: Run PHPCS for linting (adjust path based on actual folder)
     - name: Run PHPCS for linting
-      run: vendor/bin/phpcs --standard=PSR12 --report=full src/
+      run: demo_project_cicd/vendor/bin/phpcs --standard=PSR12 --report=full demo_project_cicd/
 
     # Step 10: Set execute permissions for PHPUnit (to ensure it's executable)
     - name: Set execute permissions for PHPUnit
-      run: chmod +x vendor/bin/phpunit
+      run: chmod +x demo_project_cicd/vendor/bin/phpunit
 
     # Step 11: Verify PHPUnit installation
     - name: Verify PHPUnit installation
-      run: vendor/bin/phpunit --version  # This will confirm if PHPUnit is correctly installed
+      run: demo_project_cicd/vendor/bin/phpunit --version  # This will confirm if PHPUnit is correctly installed
 
     # Step 12: Run PHPUnit tests
     - name: Run PHPUnit tests
-      run: vendor/bin/phpunit --configuration phpunit.xml
+      run: demo_project_cicd/vendor/bin/phpunit --configuration demo_project_cicd/phpunit.xml  # Adjust path to phpunit.xml if needed
 
   web-deploy:
     name: Deploy
@@ -77,4 +81,5 @@ jobs:
         server: voidek.in
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
-        server_dir: /public_html/demo_project_cicd/
+        server_dir: /public_html/demo_project_cicd/  # Ensure this path is correct for your server setup
+        local_dir: demo_project_cicd/  # Sync the entire demo_project_cicd directory to the server
