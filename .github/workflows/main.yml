@@ -26,7 +26,7 @@ jobs:
     - name: Install Composer globally
       run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-    # Step 4: Install Composer dependencies (including PHPUnit)
+    # Step 4: Install Composer dependencies (including PHPUnit and PHPCS)
     - name: Install Composer dependencies
       run: composer install --no-progress --prefer-dist --verbose
 
@@ -34,23 +34,31 @@ jobs:
     - name: Install PHP_CodeSniffer (PHPCS)
       run: composer require --dev squizlabs/php_codesniffer
 
-    # Step 6: Set execute permissions for PHPUnit (to ensure it's executable)
-    - name: Set execute permissions for PHPUnit
-      run: chmod +x vendor/bin/phpunit
+    # Step 6: Set execute permissions for PHPCS (to avoid permission issues)
+    - name: Set execute permissions for PHPCS
+      run: chmod +x vendor/bin/phpcs
 
-    # Step 7: Check PHPUnit installation (optional, just for verification)
-    - name: Verify PHPUnit installation
-      run: vendor/bin/phpunit --version  # This will confirm if PHPUnit is correctly installed
+    # Step 7: Verify PHPCS installation
+    - name: Verify PHPCS installation
+      run: vendor/bin/phpcs --version  # This will confirm if PHPCS is correctly installed
 
-    # Step 8: List directory structure to debug paths
+    # Step 8: List directory structure to debug paths (optional)
     - name: List directory structure
       run: ls -R  # This helps to check if 'src/' exists
 
-    # Step 9: Run PHPCS for linting (adjust path based on the actual folder)
+    # Step 9: Run PHPCS for linting
     - name: Run PHPCS for linting
-      run: vendor/bin/phpcs --version
+      run: vendor/bin/phpcs --standard=PSR12 src/
 
-    # Step 10: Run PHPUnit tests
+    # Step 10: Set execute permissions for PHPUnit (to ensure it's executable)
+    - name: Set execute permissions for PHPUnit
+      run: chmod +x vendor/bin/phpunit
+
+    # Step 11: Verify PHPUnit installation
+    - name: Verify PHPUnit installation
+      run: vendor/bin/phpunit --version  # This will confirm if PHPUnit is correctly installed
+
+    # Step 12: Run PHPUnit tests
     - name: Run PHPUnit tests
       run: vendor/bin/phpunit --configuration phpunit.xml
 
@@ -61,9 +69,9 @@ jobs:
     
     steps:
     - name: 🚚 Get latest code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v2
     
-    - name: 📂 Sync files
+    - name: 📂 Sync files to server
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: voidek.in
