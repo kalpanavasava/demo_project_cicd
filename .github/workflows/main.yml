@@ -44,7 +44,7 @@ jobs:
 
     # Step 8: List directory structure to debug paths (optional)
     - name: List directory structure
-      run: ls -R demo_project_cicd  # Check the contents of the demo_project_cicd folder to find your PHP files
+      run: ls -R
 
     # Step 9: Run PHPCS for linting (adjust path based on actual folder)
     - name: Run PHPCS for linting
