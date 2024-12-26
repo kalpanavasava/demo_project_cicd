@@ -40,7 +40,7 @@ jobs:
 
     # Step 7: Verify PHPCS installation
     - name: Verify PHPCS installation
-      run: demo_project_cicd/vendor/bin/phpcs --version  # This will confirm if PHPCS is correctly installed
+      run: vendor/bin/phpcs --version  # This will confirm if PHPCS is correctly installed
 
     # Step 8: List directory structure to debug paths (optional)
     - name: List directory structure
