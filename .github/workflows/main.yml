@@ -30,19 +30,23 @@ jobs:
     - name: Install Composer dependencies
       run: composer install --no-progress --prefer-dist --verbose
 
-    # Step 5: Set execute permissions for PHPUnit (to ensure it's executable)
+    # Step 5: Install PHP_CodeSniffer (PHPCS)
+    - name: Install PHP_CodeSniffer (PHPCS)
+      run: composer require --dev squizlabs/php_codesniffer
+
+    # Step 6: Set execute permissions for PHPUnit (to ensure it's executable)
     - name: Set execute permissions for PHPUnit
       run: chmod +x vendor/bin/phpunit
 
-    # Step 6: Check PHPUnit installation (optional, just for verification)
+    # Step 7: Check PHPUnit installation (optional, just for verification)
     - name: Verify PHPUnit installation
       run: vendor/bin/phpunit --version  # This will confirm if PHPUnit is correctly installed
 
-    # Step 7: Run PHPCS for linting
+    # Step 8: Run PHPCS for linting
     - name: Run PHPCS for linting
       run: vendor/bin/phpcs --standard=PSR12 src/
 
-    # Step 8: Run PHPUnit tests
+    # Step 9: Run PHPUnit tests
     - name: Run PHPUnit tests
       run: vendor/bin/phpunit --configuration phpunit.xml
 
