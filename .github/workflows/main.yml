@@ -17,7 +17,7 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         #server: ftp.samkirkland.com
-        server: www.cipher.co.tz
+        server: ftp.voidek.in
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
-        server_dir: /production.cipher.co.tz/
+        server_dir: /public_html/demo_project_cicd/
