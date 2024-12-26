@@ -28,27 +28,24 @@ jobs:
 
     # Step 4: Install Composer dependencies (including PHPUnit)
     - name: Install Composer dependencies
-      # run: composer install --no-progress --prefer-dist
       run: composer install --no-progress --prefer-dist --verbose
 
-    # Step 5: Check PHPUnit installation (optional, just for verification)
-    - name: Verify PHPUnit installation
-      run: |
-        vendor/bin/phpunit --version  # This will confirm if PHPUnit is correctly installed
-
-    # Step 6: Run PHPCS for linting
-    - name: Run PHPCS for linting
-      run: vendor/bin/phpcs --standard=PSR12 src/
-
-    # Step 7: Ensure PHPUnit has the correct permissions to run
+    # Step 5: Set execute permissions for PHPUnit (to ensure it's executable)
     - name: Set execute permissions for PHPUnit
       run: chmod +x vendor/bin/phpunit
 
+    # Step 6: Check PHPUnit installation (optional, just for verification)
+    - name: Verify PHPUnit installation
+      run: vendor/bin/phpunit --version  # This will confirm if PHPUnit is correctly installed
+
+    # Step 7: Run PHPCS for linting
+    - name: Run PHPCS for linting
+      run: vendor/bin/phpcs --standard=PSR12 src/
+
     # Step 8: Run PHPUnit tests
     - name: Run PHPUnit tests
-      run: |
-        vendor/bin/phpunit --configuration phpunit.xml
-      
+      run: vendor/bin/phpunit --configuration phpunit.xml
+
   web-deploy:
     name: 🎉 Deploy
     needs: web-build
@@ -61,7 +58,6 @@ jobs:
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
-        #server: ftp.samkirkland.com
         server: voidek.in
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
