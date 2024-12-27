@@ -46,7 +46,7 @@ jobs:
 
     - name: Test FTP server connection
       run: |
-        curl -v ${{ secrets.ftp_server }}
+        curl -v ftp://${{ secrets.ftp_server }}
 
     - name: Set up Git FTP credentials
       run: |
@@ -56,9 +56,11 @@ jobs:
     - name: Check if git-ftp is initialized
       run: |
         if [ ! -f .git-ftp.log ]; then
+          echo "Initializing git-ftp..."
           git ftp init --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} ftp://${{ secrets.ftp_server }}/
         fi
 
     - name: Deploy only modified files
       run: |
+        echo "Deploying modified files..."
         git ftp push --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} --remote-dir /public_html/demo_project_cicd ftp://${{ secrets.ftp_server }}/
