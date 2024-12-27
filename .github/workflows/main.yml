@@ -46,7 +46,7 @@ jobs:
 
     - name: Test FTP server connection
       run: |
-        curl -v ftp://${{ secrets.ftp_server }}
+        curl -v ${{ secrets.ftp_server }}
 
     - name: Set up Git FTP credentials
       run: |
