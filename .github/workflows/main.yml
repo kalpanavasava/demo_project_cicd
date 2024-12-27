@@ -11,44 +11,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout the repository code
+
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    # Step 2: Set up PHP (with necessary extensions)
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.2'
-        extensions: mbstring, intl, bcmath  # Optional: Add other extensions if needed
+        extensions: mbstring, intl, bcmath 
 
-    # Step 3: Install Composer globally (ensure it's available for the current workflow)
     - name: Install Composer globally
       run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-    # Step 4: Install Composer dependencies (including PHPUnit and PHPCS)
     - name: Install Composer dependencies
       run: composer install --no-progress --prefer-dist --verbose
-
-    # Step 5: Install PHP_CodeSniffer (PHPCS)
-    - name: Install PHP_CodeSniffer (PHPCS)
-      run: composer require --dev squizlabs/php_codesniffer
-
-    # Step 6: Set execute permissions for PHPCS (to avoid permission issues)
-    - name: Set execute permissions for PHPCS
-      run: chmod +x vendor/bin/phpcs
-
-    # Step 7: Verify PHPCS installation
-    - name: Verify PHPCS installation
-      run: vendor/bin/phpcs --version  # This will confirm if PHPCS is correctly installed
-
-    # Step 8: List directory structure to debug paths (optional)
-    - name: List directory structure
-      run: ls -R
-
-    # Step 9: Run PHPCS for linting (adjust path based on actual folder)
-    - name: Run PHPCS for linting
-      run: vendor/bin/phpcs --standard=PSR12 --report=full vendor/squizlabs/php_codesniffer/src/
+    
+    - name: Run tests 
+      run: vendor/bin/phpunit --configuration phpunit.xml
 
   web-deploy:
     name: Deploy
@@ -65,5 +45,5 @@ jobs:
         server: ${{ secrets.ftp_server }}
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
-        server_dir: /public_html/demo_project_cicd/  # Ensure this path is correct for your server setup
-        local_dir: demo_project_cicd/  # Sync the entire demo_project_cicd directory to the server
+        server_dir: /public_html/demo_project_cicd/  
+        local_dir: demo_project_cicd/  
