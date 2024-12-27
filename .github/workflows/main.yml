@@ -35,7 +35,7 @@ jobs:
     - name: Make PHPUnit executable
       run: chmod +x vendor/bin/phpunit  # Make phpunit executable
 
-    - name: Run PHPUnit tests (whole project)
+    - name: Run PHPUnit tests
       run: vendor/bin/phpunit --configuration phpunit.xml.dist
       continue-on-error: false   # Ensures workflow stops if tests fail
 
