@@ -28,7 +28,7 @@ jobs:
       run: composer install --no-progress --prefer-dist --verbose
     
     - name: Run tests 
-      run: vendor/bin/phpunit --configuration phpunit.xml
+      run: vendor/bin/phpunit --configuration phpunit.xml.dist
 
   web-deploy:
     name: Deploy
