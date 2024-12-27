@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="vendor/autoload.php">
-  <testsuites>
-    <testsuite name="Application Test Suite">
-      <directory>./tests</directory>
-    </testsuite>
-  </testsuites>
+    <testsuites>
+        <testsuite name="Application Test Suite">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./</directory>  
+        </include>
+    </coverage>
+
+    <listeners>
+        <listener class="PHPUnit\TextUI\ResultPrinter" file="vendor/phpunit/phpunit/src/TextUI/ResultPrinter.php"/>
+    </listeners>
 </phpunit>
