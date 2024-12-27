@@ -20,6 +20,10 @@ jobs:
         php-version: '8.2'
         extensions: mbstring, intl, bcmath, xdebug  # Install xdebug for coverage
 
+    - name: Verify Xdebug Installation
+      run: |
+        php -m | grep xdebug  # Verify that Xdebug is installed
+
     - name: Install Composer globally
       run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -39,7 +43,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: coverage-report
-        path: coverage-report/**  # Upload all files inside the coverage-report directory
+        path: coverage-report/**  # Upload all files inside coverage-report directory
 
   web-deploy:
     name: Deploy
