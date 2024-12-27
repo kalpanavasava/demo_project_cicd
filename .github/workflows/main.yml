@@ -47,14 +47,19 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Get latest code
+    - name: Checkout repository
       uses: actions/checkout@v2
     
-    - name: Sync files to server
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-      with:
-        server: ${{ secrets.ftp_server }}
-        username: ${{ secrets.ftp_username }}
-        password: ${{ secrets.ftp_password }}
-        server_dir: /public_html/demo_project_cicd/  
-        local_dir: demo_project_cicd/
+    - name: Install Git FTP
+      run: |
+        sudo apt-get install git-ftp
+
+    - name: Set up Git FTP credentials
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "actions@github.com"
+        git ftp init --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} ftp://$${{ secrets.ftp_server }}/
+
+    - name: Deploy only modified files
+      run: |
+        git ftp push --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} --remote-dir /public_html/demo_project_cicd/ ftp://${{ secrets.ftp_server }}/
