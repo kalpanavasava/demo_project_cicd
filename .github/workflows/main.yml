@@ -27,18 +27,18 @@ jobs:
       run: |
         composer install --no-interaction --prefer-dist
 
-    - name: Verify PHPUnit installation
-      run: |
-        composer show phpunit/phpunit
-
     - name: Fix execute permissions for PHPUnit
       run: |
         chmod +x vendor/bin/phpunit  # Ensure the PHPUnit binary is executable
 
     - name: Run PHPUnit tests
       run: |
-        vendor/bin/phpunit --configuration phpunit.xml --coverage-html coverage-report || echo "PHPUnit failed, running basic tests"
-      
+        vendor/bin/phpunit --configuration phpunit.xml --coverage-html coverage-report
+
+    - name: Debug: List files after running PHPUnit
+      run: |
+        ls -R coverage-report  # List the content of the coverage-report directory to check if it's created
+
     - name: Upload code coverage report
       uses: actions/upload-artifact@v3
       with:

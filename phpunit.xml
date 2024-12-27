@@ -3,21 +3,17 @@
          colors="true"
          verbose="true">
 
-    <!-- Define the test suite -->
     <testsuites>
         <testsuite name="Application Test Suite">
-            <directory>./tests</directory>  <!-- Path to your test files -->
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
 
-    <!-- Code coverage configuration -->
     <coverage processUncoveredFiles="false">
         <include>
             <directory suffix=".php">./</directory> <!-- Include all PHP files in the root -->
         </include>
         <report>
-            <!-- Coverage report formats -->
-            <clover outputFile="coverage-report/clover.xml"/>
             <html outputDirectory="coverage-report"/>
         </report>
     </coverage>
