@@ -33,7 +33,7 @@ jobs:
 
     - name: Run PHPUnit tests
       run: |
-        vendor/bin/phpunit --coverage-html coverage-report || echo "PHPUnit tests failed."
+        vendor/bin/phpunit --configuration phpunit.xml --coverage-html coverage-report
 
     - name: Upload code coverage report
       uses: actions/upload-artifact@v3
