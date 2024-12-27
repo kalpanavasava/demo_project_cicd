@@ -60,7 +60,6 @@ jobs:
           git ftp init --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} ${{ secrets.ftp_server }}/
         else
           echo ".git-ftp.log exists, skipping init. Proceeding to git ftp push."
-          git ftp push --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} ${{ secrets.ftp_server }}/
         fi
 
     - name: Deploy only modified files
