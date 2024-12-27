@@ -45,7 +45,8 @@ jobs:
       run: sudo apt-get install git-ftp
 
     - name: Test FTP server connection
-      run: curl -I ftp://${{ secrets.ftp_server }}
+      run: |
+        curl -I ftp://${{ secrets.ftp_server }}
 
     - name: Set up Git FTP credentials
       run: |
