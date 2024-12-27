@@ -52,9 +52,13 @@ jobs:
       run: |
         git config --global user.name ${{ secrets.ftp_username }}
         git config --global user.email ${{ secrets.ftp_email }}
-        git ftp init -v --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} ${{ secrets.ftp_server }}/
+
+    - name: Check if git-ftp is initialized
+      run: |
+        if [ ! -f .git-ftp.log ]; then
+          git ftp init --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} ftp://${{ secrets.ftp_server }}/
+        fi
 
     - name: Deploy only modified files
       run: |
         git ftp push --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} --remote-dir /public_html/demo_project_cicd ftp://${{ secrets.ftp_server }}/
-
