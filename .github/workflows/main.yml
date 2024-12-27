@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
     - name: Checkout repository
       uses: actions/checkout@v2
 
@@ -27,6 +26,10 @@ jobs:
     - name: Install Composer dependencies
       run: composer install --no-progress --prefer-dist --verbose
     
+    # Fix the permission for phpunit
+    - name: Make PHPUnit executable
+      run: chmod +x vendor/bin/phpunit
+
     - name: Run tests 
       run: vendor/bin/phpunit --configuration phpunit.xml.dist
 
@@ -46,4 +49,4 @@ jobs:
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
         server_dir: /public_html/demo_project_cicd/  
-        local_dir: demo_project_cicd/  
+        local_dir: demo_project_cicd/
