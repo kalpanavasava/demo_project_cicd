@@ -31,15 +31,17 @@ jobs:
 
     - name: Run PHPUnit tests
       run: vendor/bin/phpunit --configuration phpunit.xml.dist
+      continue-on-error: false   # Ensure that the workflow stops if tests fail
 
     - name: Check PHP syntax (dry-run check)
       run: |
         echo "Checking PHP syntax..."
         find . -name "*.php" -exec php -l {} \;   # This will list syntax errors for all PHP files
+      continue-on-error: false   # Ensure that the workflow stops if there are syntax errors
 
   web-deploy:
     name: Deploy
-    needs: web-build
+    needs: web-build  # Ensure deployment only happens if build/test passed
     runs-on: ubuntu-latest
 
     steps:
