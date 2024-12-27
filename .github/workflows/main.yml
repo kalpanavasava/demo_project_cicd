@@ -57,7 +57,7 @@ jobs:
       run: |
         if [ ! -f .git-ftp.log ]; then
           echo "Initializing git-ftp..."
-          git ftp init --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} ftp://${{ secrets.ftp_server }}/
+          git ftp init --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} ${{ secrets.ftp_server }}/
         fi
 
     - name: Deploy only modified files
