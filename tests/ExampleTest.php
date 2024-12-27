@@ -4,9 +4,10 @@ use PHPUnit\Framework\TestCase;
 
 class ExampleTest extends TestCase
 {
-    public function testTrue()
+    public function testAddition()
     {
-        $this->assertTrue(true);
+        $result = 2 + 2;
+        $this->assertEquals(4, $result);
     }
 }
 
