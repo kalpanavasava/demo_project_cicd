@@ -55,6 +55,7 @@ jobs:
 
     - name: Initialize git-ftp if not already initialized
       run: |
+        # Check if .git-ftp.log exists. If not, initialize Git FTP.
         if [ ! -f .git-ftp.log ]; then
           echo "Initializing git-ftp..."
           git ftp init --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} ${{ secrets.ftp_server }}/
