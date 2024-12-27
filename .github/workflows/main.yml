@@ -32,6 +32,9 @@ jobs:
         find . -name "*.php" -exec php -l {} \;
       continue-on-error: false   # Ensures workflow stops if there are syntax errors
 
+    - name: Make PHPUnit executable
+      run: chmod +x vendor/bin/phpunit  # Make phpunit executable
+
     - name: Run PHPUnit tests (whole project)
       run: vendor/bin/phpunit --configuration phpunit.xml.dist
       continue-on-error: false   # Ensures workflow stops if tests fail
