@@ -18,7 +18,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.2'
-        extensions: mbstring, intl, bcmath 
+        extensions: mbstring, intl, bcmath
 
     - name: Install Composer globally
       run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -29,27 +29,32 @@ jobs:
     - name: Make PHPUnit executable
       run: chmod +x vendor/bin/phpunit
 
-    - name: Run tests
+    - name: Run PHPUnit tests
       run: vendor/bin/phpunit --configuration phpunit.xml.dist
+
+    - name: Check PHP syntax (dry-run check)
+      run: |
+        echo "Checking PHP syntax..."
+        find . -name "*.php" -exec php -l {} \;   # This will list syntax errors for all PHP files
 
   web-deploy:
     name: Deploy
     needs: web-build
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Get latest code
       uses: actions/checkout@v2
-    
+
     - name: Sync files to server
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.ftp_server }}
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
-        server_dir: /public_html/demo_project_cicd/  
+        server_dir: /public_html/demo_project_cicd/
         local_dir: demo_project_cicd/
-        
+
         # The following options are crucial for only deploying modified files
         ftp_options: |
           --dry-run   # Run a dry-run to test without actually uploading anything.
