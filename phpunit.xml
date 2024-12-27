@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php">
-    <coverage processUncoveredFiles="true">
-        <!-- Remove the clover element, as it's no longer used in the same way -->
+<phpunit bootstrap="vendor/autoload.php"
+         colors="true"
+         verbose="true">
+
+    <!-- Define the test suite -->
+    <testsuites>
+        <testsuite name="Application Test Suite">
+            <directory>./tests</directory> <!-- Path to your test directory -->
+        </testsuite>
+    </testsuites>
+
+    <!-- Code coverage configuration -->
+    <coverage processUncoveredFiles="false">
+        <include>
+            <directory suffix=".php">./</directory> <!-- Point to the root folder where your PHP files are -->
+        </include>
         <report>
+            <!-- Coverage report formats -->
+            <clover outputFile="coverage-report/clover.xml"/>
             <html outputDirectory="coverage-report"/>
         </report>
     </coverage>
-    <testsuites>
-        <testsuite name="Application Test Suite">
-            <directory>./tests</directory>
-        </testsuite>
-    </testsuites>
+
 </phpunit>
