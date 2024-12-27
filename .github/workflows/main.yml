@@ -25,40 +25,33 @@ jobs:
 
     - name: Install Composer dependencies
       run: composer install --no-progress --prefer-dist --verbose
-    
-    # Fix the permission for phpunit
+
     - name: Make PHPUnit executable
       run: chmod +x vendor/bin/phpunit
 
-    # Check if tests directory exists before running PHPUnit
-    - name: Check if tests directory exists
-      run: |
-        if [ ! -d "./tests" ]; then
-          echo "Tests directory not found. Skipping tests.";
-          exit 0;  # Skip PHPUnit if no tests directory
-        fi
-
-    - name: Run tests 
+    - name: Run tests
       run: vendor/bin/phpunit --configuration phpunit.xml.dist
 
   web-deploy:
     name: Deploy
     needs: web-build
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-    
+
     - name: Install Git FTP
-      run: |
-        sudo apt-get install git-ftp
+      run: sudo apt-get install git-ftp
+
+    - name: Test FTP server connection
+      run: curl -I ftp://${{ secrets.ftp_server }}
 
     - name: Set up Git FTP credentials
       run: |
         git config --global user.name "github-actions"
         git config --global user.email "actions@github.com"
-        git ftp init --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} ftp://$${{ secrets.ftp_server }}/
+        git ftp init --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} ftp://${{ secrets.ftp_server }}/
 
     - name: Deploy only modified files
       run: |
