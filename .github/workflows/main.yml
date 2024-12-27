@@ -53,7 +53,7 @@ jobs:
         git config --global user.name ${{ secrets.ftp_username }}
         git config --global user.email ${{ secrets.ftp_email }}
 
-    - name: Check if git-ftp is initialized
+    - name: Initialize git-ftp if not already initialized
       run: |
         if [ ! -f .git-ftp.log ]; then
           echo "Initializing git-ftp..."
