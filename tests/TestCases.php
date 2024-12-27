@@ -2,9 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
-class ExampleTest extends TestCase
+class TestCases extends TestCase
 {
-    public function testAddition()
+    public function testIndex()
     {
         ob_start();
         include 'index.php';
