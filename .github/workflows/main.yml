@@ -63,7 +63,7 @@ jobs:
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
         server_dir: /public_html/demo_project_cicd/  
-        local_dir: demo_project_cicd/
+        # local_dir: demo_project_cicd/
         ftp_options: |
           --dry-run   # Run a dry-run to test without actually uploading anything.
           --verbose   # Log more detailed information for debugging.
