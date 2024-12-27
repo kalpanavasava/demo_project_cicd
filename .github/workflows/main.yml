@@ -31,6 +31,10 @@ jobs:
       run: |
         composer show phpunit/phpunit
 
+    - name: Fix execute permissions for PHPUnit
+      run: |
+        chmod +x vendor/bin/phpunit  # Ensure the PHPunit binary is executable
+
     - name: Run PHPUnit tests
       run: |
         vendor/bin/phpunit --configuration phpunit.xml --coverage-html coverage-report
