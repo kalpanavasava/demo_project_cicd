@@ -14,23 +14,32 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up PHP
+    - name: Set up PHP with Xdebug
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.2'
-        extensions: mbstring, intl, bcmath 
+        extensions: mbstring, intl, bcmath, xdebug  # Install xdebug for coverage
+
+    - name: Verify Xdebug Installation
+      run: |
+        php -m | grep xdebug  # Verify that Xdebug is installed
 
     - name: Install Composer globally
       run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
     - name: Install Composer dependencies
-      run: composer install --no-progress --prefer-dist --verbose
+      run: |
+        composer install --no-interaction --prefer-dist
 
-    - name: Make PHPUnit executable
-      run: chmod +x vendor/bin/phpunit
+    - name: Run PHPUnit tests with code coverage
+      run: |
+        vendor/bin/phpunit --configuration phpunit.xml --coverage-html coverage-report --verbose
 
-    - name: Run tests
-      run: vendor/bin/phpunit --configuration phpunit.xml.dist
+    - name: Upload code coverage report
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report
+        path: coverage-report/**  # Upload all files inside coverage-report directory
 
   web-deploy:
     name: Deploy
@@ -38,22 +47,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Get latest code
       uses: actions/checkout@v2
 
-    - name: Install Git FTP
-      run: sudo apt-get install git-ftp
-
-    - name: Test FTP server connection
-      run: |
-        curl -v ${{ secrets.ftp_server }}
-
-    - name: Set up Git FTP credentials
-      run: |
-        git config --global user.name ${{ secrets.ftp_username }}
-        git config --global user.email ${{ secrets.ftp_email }}
-        git ftp init -v --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} ${{ secrets.ftp_server }}/
-
-    - name: Deploy only modified files
-      run: |
-        git ftp push -v --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} --remote-dir /public_html/demo_project_cicd/ ${{ secrets.ftp_server }}/
+    - name: Sync files to server
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.ftp_server }}
+        username: ${{ secrets.ftp_username }}
+        password: ${{ secrets.ftp_password }}
+        server_dir: /public_html/demo_project_cicd/
+        ftp_options: |
+          --dry-run   # Run a dry-run to test without actually uploading anything.
+          --verbose   # Log more detailed information for debugging.
