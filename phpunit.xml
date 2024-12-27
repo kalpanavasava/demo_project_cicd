@@ -6,14 +6,14 @@
     <!-- Define the test suite -->
     <testsuites>
         <testsuite name="Application Test Suite">
-            <directory>./tests</directory> <!-- Path to your test directory -->
+            <directory>./tests</directory>  <!-- Path to your test files -->
         </testsuite>
     </testsuites>
 
     <!-- Code coverage configuration -->
     <coverage processUncoveredFiles="false">
         <include>
-            <directory suffix=".php">./</directory> <!-- Point to the root folder where your PHP files are -->
+            <directory suffix=".php">./</directory> <!-- Include all PHP files in the root -->
         </include>
         <report>
             <!-- Coverage report formats -->
