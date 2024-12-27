@@ -56,8 +56,5 @@ jobs:
 
     - name: Deploy only modified files
       run: |
-        git ftp push -v \
-          --user ${{ secrets.ftp_username }} \
-          --passwd ${{ secrets.ftp_password }} \
-          --remote-dir /public_html/demo_project_cicd/ \
-          ${{ secrets.ftp_server }}/
+        git ftp push --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} --remote-dir /public_html/demo_project_cicd ftp://${{ secrets.ftp_server }}/
+
