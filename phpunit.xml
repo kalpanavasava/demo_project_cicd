@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="vendor/autoload.php">
     <coverage processUncoveredFiles="true">
-        <clover outputFile="coverage-report/clover.xml" />
+        <!-- Remove the clover element, as it's no longer used in the same way -->
+        <report>
+            <html outputDirectory="coverage-report"/>
+        </report>
     </coverage>
     <testsuites>
         <testsuite name="Application Test Suite">
