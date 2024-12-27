@@ -36,8 +36,16 @@ jobs:
       run: chmod +x vendor/bin/phpunit  # Make phpunit executable
 
     - name: Run PHPUnit tests
-      run: vendor/bin/phpunit --configuration phpunit.xml.dist
+      run: |
+          vendor/bin/phpunit --coverage-html coverage-report
       continue-on-error: false   # Ensures workflow stops if tests fail
+
+    # Optional: Upload the coverage report to GitHub 
+    - name: Upload code coverage report
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report
+        path: coverage-report/
 
   web-deploy:
     name: Deploy
