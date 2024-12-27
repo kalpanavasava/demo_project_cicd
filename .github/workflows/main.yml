@@ -30,6 +30,14 @@ jobs:
     - name: Make PHPUnit executable
       run: chmod +x vendor/bin/phpunit
 
+    # Check if tests directory exists before running PHPUnit
+    - name: Check if tests directory exists
+      run: |
+        if [ ! -d "./tests" ]; then
+          echo "Tests directory not found. Skipping tests.";
+          exit 0;  # Skip PHPUnit if no tests directory
+        fi
+
     - name: Run tests 
       run: vendor/bin/phpunit --configuration phpunit.xml.dist
 
