@@ -36,34 +36,21 @@ jobs:
     name: Deploy
     needs: web-build
     runs-on: ubuntu-latest
-
+    
     steps:
-    - name: Checkout repository
+    - name: Get latest code
       uses: actions/checkout@v2
-
-    - name: Install Git FTP
-      run: sudo apt-get install git-ftp
-
-    - name: Test FTP server connection
-      run: |
-        curl -v ${{ secrets.ftp_server }}
-
-    - name: Set up Git FTP credentials
-      run: |
-        git config --global user.name ${{ secrets.ftp_username }}
-        git config --global user.email ${{ secrets.ftp_email }}
-
-    - name: Initialize git-ftp if not already initialized
-      run: |
-        # Check if .git-ftp.log exists. If not, initialize Git FTP.
-        if [ ! -f .git-ftp.log ]; then
-          echo "Initializing git-ftp..."
-          git ftp init --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} ${{ secrets.ftp_server }}/
-        else
-          echo ".git-ftp.log exists, skipping init. Proceeding to git ftp push."
-        fi
-
-    - name: Deploy only modified files
-      run: |
-        echo "Deploying modified files..."
-        git ftp push --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} --remote-dir /public_html/demo_project_cicd ${{ secrets.ftp_server }}/
+    
+    - name: Sync files to server
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.ftp_server }}
+        username: ${{ secrets.ftp_username }}
+        password: ${{ secrets.ftp_password }}
+        server_dir: /public_html/demo_project_cicd/  
+        local_dir: demo_project_cicd/
+        
+        # The following options are crucial for only deploying modified files
+        ftp_options: |
+          --dry-run   # Run a dry-run to test without actually uploading anything.
+          --verbose   # Log more detailed information for debugging.
