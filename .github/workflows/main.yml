@@ -50,8 +50,8 @@ jobs:
 
     - name: Set up Git FTP credentials
       run: |
-        git config --global user.name "github-actions"
-        git config --global user.email "actions@github.com"
+        git config --global user.name ${{ secrets.ftp_username }}
+        git config --global user.email ${{ secrets.ftp_email }}
         git ftp init -v --user ${{ secrets.ftp_username }} --passwd ${{ secrets.ftp_password }} ftp://${{ secrets.ftp_server }}/
 
     - name: Deploy only modified files
