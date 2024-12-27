@@ -14,11 +14,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up PHP
+    - name: Set up PHP with Xdebug
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.2'
-        extensions: mbstring, intl, bcmath
+        extensions: mbstring, intl, bcmath, xdebug  # Install xdebug for coverage
 
     - name: Install Composer globally
       run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -27,23 +27,19 @@ jobs:
       run: |
         composer install --no-interaction --prefer-dist
 
-    - name: Fix execute permissions for PHPUnit
+    - name: Run PHPUnit tests with code coverage
       run: |
-        chmod +x vendor/bin/phpunit  # Ensure the PHPUnit binary is executable
+        vendor/bin/phpunit --configuration phpunit.xml --coverage-html coverage-report --verbose
 
-    - name: Run PHPUnit tests
+    - name: Debug: Check coverage-report folder
       run: |
-        vendor/bin/phpunit --configuration phpunit.xml --coverage-html coverage-report
-
-    - name: Debug: List files after running PHPUnit
-      run: |
-        ls -R coverage-report  # List the content of the coverage-report directory to check if it's created
+        ls -R coverage-report  # List the contents of the coverage-report directory
 
     - name: Upload code coverage report
       uses: actions/upload-artifact@v3
       with:
         name: coverage-report
-        path: coverage-report/
+        path: coverage-report/**  # Upload all files inside the coverage-report directory
 
   web-deploy:
     name: Deploy
