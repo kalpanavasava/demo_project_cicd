@@ -24,23 +24,13 @@ jobs:
       run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
     - name: Install Composer dependencies
-      run: composer install --no-progress --prefer-dist --verbose
-
-    - name: Check PHP syntax (dry-run check)
       run: |
-        echo "Checking PHP syntax..."
-        find . -name "*.php" -exec php -l {} \;
-      continue-on-error: false   # Ensures workflow stops if there are syntax errors
-
-    - name: Make PHPUnit executable
-      run: chmod +x vendor/bin/phpunit  # Make phpunit executable
+        composer install --no-interaction --prefer-dist
 
     - name: Run PHPUnit tests
       run: |
         vendor/bin/phpunit --coverage-html coverage-report
-      # continue-on-error: false   # Ensures workflow stops if tests fail
-
-    # Optional: Upload the coverage report to GitHub 
+    
     - name: Upload code coverage report
       uses: actions/upload-artifact@v3
       with:
