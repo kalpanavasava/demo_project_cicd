@@ -10,6 +10,6 @@
         <include>
             <directory suffix=".php">app</directory>
         </include>
-        <clover outputFile="coverage/coverage-report.xml"/>
+        <!-- <clover outputFile="coverage/coverage-report.xml"/> -->
     </coverage>
 </phpunit>
