@@ -6,8 +6,12 @@ class TestCases extends TestCase
 {
     public function testIndex()
     {
-        $response = $this->get('/app/index.php');
-        $response->assertSee('<h1>Welcome to GitHub Actions CI/CD Demo VW</h1>');
+        ob_start();
+        include 'app/index.php';
+        $output = ob_get_clean();
+        
+        $this->assertStringContainsString("<h1>Welcome to GitHub Actions CI/CD Demo VW</h1>", $output);
+        $this->assertStringContainsString("Last deployment:", $output);
     }
 }
 
