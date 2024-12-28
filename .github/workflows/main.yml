@@ -48,12 +48,12 @@ jobs:
 
     - name: PHPUnit Tests
       uses: php-actions/phpunit@v3
-      env:
-        XDEBUG_MODE: coverage
-      with:
-        configuration: phpunit.xml.dist
-        php_extensions: gettext xdebug
-        args: --coverage-clover ./coverage.xml
+        env:
+          XDEBUG_MODE: coverage
+        with:
+          configuration: phpunit.xml.dist
+          php_extensions: gettext, xdebug
+          args: --coverage-clover ./coverage.xml --test-suffix Test.php --test-suffix .phpt
 
     - name: Upload code coverage report
       uses: actions/upload-artifact@v3
