@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use App\Hello; 
+use App\Hello;  
 
 class HelloTest extends TestCase {
     public function testSayHello() {
