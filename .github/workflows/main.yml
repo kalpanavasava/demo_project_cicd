@@ -19,6 +19,7 @@ jobs:
       with:
         php-version: '8.2'
         extensions: mbstring, intl, bcmath, xdebug
+        coverage: xdebug 
 
     - name: Install Composer globally
       run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -43,7 +44,7 @@ jobs:
 
     - name: Run PHPUnit tests
       run: |
-        vendor/bin/phpunit --configuration phpunit.xml
+        vendor/bin/phpunit --coverage-clover=coverage.xml
 
     - name: Upload code coverage report
       uses: actions/upload-artifact@v3
