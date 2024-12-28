@@ -4,9 +4,10 @@
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
+    <!-- Code Coverage Configuration -->
     <coverage processUncoveredFiles="true">
         <include>
-            <directory suffix=".php">./app</directory> 
+            <directory suffix=".php">./app</directory>  
         </include>
         <exclude>
             <directory>./vendor</directory>
