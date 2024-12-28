@@ -44,16 +44,14 @@ jobs:
         name: coverage-report
         path: coverage/clover.xml
 
-    - name: Upload HTML Coverage Report
-      if: always()
-      run: |
-        mkdir -p coverage/html
-        vendor/bin/phpunit --coverage-html=coverage/html
-      uses: actions/upload-artifact@v3
+    - name: Upload Coverage to Codecov
+      uses: codecov/codecov-action@v3
       with:
-        name: html-coverage-report
-        path: coverage/html
-        
+        files: coverage/clover.xml
+        flags: unittests
+        name: php-unit-tests
+        fail_ci_if_error: true
+      
     # - name: Run PHPUnit tests with code coverage
     #   run: |
     #     vendor/bin/phpunit --configuration phpunit.xml.dist
