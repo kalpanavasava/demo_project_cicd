@@ -18,7 +18,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.2'
-        extensions: mbstring, intl, bcmath
+        extensions: mbstring, intl, bcmath, xdebug
 
     - name: Install Composer globally
       run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -30,6 +30,9 @@ jobs:
     - name: Verify PHPUnit installation
       run: |
         composer show phpunit/phpunit
+
+    - name: Check if Xdebug is enabled
+      run: php -m | grep xdebug
 
     - name: Fix execute permissions for PHPUnit
       run: |
