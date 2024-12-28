@@ -42,9 +42,18 @@ jobs:
     - name: Create coverage directory
       run: mkdir -p coverage
 
-    - name: Run PHPUnit tests
-      run: |
-        vendor/bin/phpunit --configuration phpunit.xml
+    # - name: Run PHPUnit tests
+    #   run: |
+    #     vendor/bin/phpunit --configuration phpunit.xml
+
+    - name: PHPUnit Tests
+      uses: php-actions/phpunit@v3
+      env:
+        XDEBUG_MODE: coverage
+      with:
+        configuration: phpunit.xml.dist
+        php_extensions: gettext xdebug
+        args: --coverage-clover ./coverage.xml
 
     - name: Upload code coverage report
       uses: actions/upload-artifact@v3
