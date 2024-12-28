@@ -1,24 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="vendor/autoload.php" colors="true">
     <testsuites>
         <testsuite name="Application Test Suite">
-            <directory>./tests</directory> 
+            <directory suffix=".php">tests</directory>
         </testsuite>
     </testsuites>
-
-    <coverage processUncoveredFiles="true">
-        <!-- Include your application code -->
+    <coverage>
         <include>
-            <directory suffix=".php">./app</directory> 
+            <directory suffix=".php">app</directory>
         </include>
-        <!-- Exclude vendor and test files from coverage -->
-        <exclude>
-            <directory>./vendor</directory> <!-- Exclude vendor -->
-            <directory suffix=".php">./tests</directory> <!-- Exclude tests -->
-        </exclude>
     </coverage>
-
-    <logging>
-        <!-- Clover is a common code coverage format used for CI tools -->
-        <clover outputFile="coverage/coverage-report.xml"/>
-    </logging>
 </phpunit>
