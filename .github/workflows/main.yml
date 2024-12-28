@@ -43,6 +43,16 @@ jobs:
       with:
         name: coverage-report
         path: coverage/clover.xml
+
+    - name: Upload HTML Coverage Report
+      if: always()
+      run: |
+        mkdir -p coverage/html
+        vendor/bin/phpunit --coverage-html=coverage/html
+      uses: actions/upload-artifact@v3
+      with:
+        name: html-coverage-report
+        path: coverage/html
         
     # - name: Run PHPUnit tests with code coverage
     #   run: |
