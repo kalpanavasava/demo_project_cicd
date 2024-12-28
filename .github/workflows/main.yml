@@ -40,7 +40,7 @@ jobs:
         chmod +x vendor/bin/phpunit  
 
     - name: Create coverage directory
-      run: mkdir -p coverage
+      run: mkdir -p coverage-report
 
     - name: Run PHPUnit tests
       run: |
@@ -50,7 +50,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: clover-coverage-report
-        path: coverage/clover.xml
+        path: coverage/coverage-report.xml
       
     # - name: Run PHPUnit tests with code coverage
     #   run: |
