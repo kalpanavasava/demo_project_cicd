@@ -14,16 +14,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Setup PHP
+    - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.2'
-        extensions: xdebug
-        coverage: xdebug
-
-    - name: Verify Xdebug Installation
-      run: |
-        php -m | grep xdebug  # Verify that Xdebug is installed
+        extensions: mbstring, intl, bcmath
 
     - name: Install Composer globally
       run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -32,26 +27,23 @@ jobs:
       run: |
         composer install --no-interaction --prefer-dist
 
+    - name: Verify PHPUnit installation
+      run: |
+        composer show phpunit/phpunit
+
     - name: Fix execute permissions for PHPUnit
       run: |
-        chmod +x vendor/bin/phpunit  # Ensure the PHPunit binary is executable
+        chmod +x vendor/bin/phpunit  
 
-    - name: Run PHPUnit Tests
-      run: vendor/bin/phpunit --coverage-clover=coverage/clover.xml
+    - name: Run PHPUnit tests
+      run: |
+        vendor/bin/phpunit --configuration phpunit.xml --coverage-html coverage-report
 
-    - name: Upload Coverage Report
+    - name: Upload code coverage report
       uses: actions/upload-artifact@v3
       with:
         name: coverage-report
-        path: coverage/clover.xml
-
-    - name: Upload Coverage to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        files: coverage/clover.xml
-        flags: unittests
-        name: php-unit-tests
-        fail_ci_if_error: true
+        path: coverage-report/
       
     # - name: Run PHPUnit tests with code coverage
     #   run: |
