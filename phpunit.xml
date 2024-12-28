@@ -16,8 +16,4 @@
             <directory suffix=".php">./tests</directory> <!-- Exclude tests -->
         </exclude>
     </coverage>
-
-    <logging>
-        <clover outputFile="coverage/clover.xml"/>
-    </logging>
 </phpunit>
