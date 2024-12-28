@@ -16,4 +16,9 @@
             <directory suffix=".php">./tests</directory> <!-- Exclude tests -->
         </exclude>
     </coverage>
+
+    <logging>
+        <!-- Clover is a common code coverage format used for CI tools -->
+        <clover outputFile="coverage/coverage-report.xml"/>
+    </logging>
 </phpunit>
