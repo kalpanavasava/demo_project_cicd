@@ -1,6 +1,6 @@
 <?php 
 
-echo "Hello Voidek Webolutions!"
+echo "Hello Voidek Webolutions!";
 
 ?>
 <!DOCTYPE html>
