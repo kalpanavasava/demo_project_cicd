@@ -1,1 +1,1 @@
-{"version":1,"defects":{"HelloTest::testSayHello":8,"TestCases::testIndex":7},"times":{"ExampleTest::testSample":0.004,"HelloTest::testSayHello":0.001,"TestCases::testIndex":0.846}}
+{"version":1,"defects":{"HelloTest::testSayHello":8,"TestCases::testIndex":7},"times":{"ExampleTest::testSample":0.003,"HelloTest::testSayHello":0.001,"TestCases::testIndex":0.001}}
