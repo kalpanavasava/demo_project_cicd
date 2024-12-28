@@ -12,12 +12,10 @@
         </testsuite>
     </testsuites>
 
-    <coverage>
+    <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">app</directory>
         </include>
-        <report>
-            <clover outputFile="coverage/coverage-report.xml"/>
-        </report>
+        <clover outputFile="coverage/coverage-report.xml"/>
     </coverage>
 </phpunit>
