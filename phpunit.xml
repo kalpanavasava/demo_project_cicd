@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="https://schema.phpunit.de PHPUnit-11.5.xsd"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd"
+    backupGlobals="false"
     bootstrap="vendor/autoload.php"
     colors="true"
+    processIsolation="false"
     stopOnFailure="false"
-    stderr="true"
-    backupGlobals="false"
-    cacheResult="false"
-    cacheDirectory="tmp/cache">
-
-    <!-- Test suite configuration -->
+    executionOrder="random"
+    failOnWarning="true"
+    failOnRisky="true"
+    failOnEmptyTestSuite="true"
+    beStrictAboutOutputDuringTests="true"
+    cacheDirectory=".phpunit.cache"
+    backupStaticProperties="false"
+>
     <testsuites>
-        <testsuite name="Application Test Suite">
-            <directory>./tests</directory> <!-- Path to your test files -->
+        <testsuite name="VendorName Test Suite">
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
-
-    <!-- Code coverage configuration -->
-    <coverage>
+    <logging>
+        <junit outputFile="build/report.junit.xml"/>
+    </logging>
+    <source>
         <include>
-            <directory suffix=".php">./app</directory> <!-- Adjust if your code is in 'src' -->
+            <directory suffix=".php">./app</directory>
         </include>
-
-        <exclude>
-            <directory suffix=".php">./tests</directory>
-        </exclude>
-    </coverage>
-
+    </source>
 </phpunit>
