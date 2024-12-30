@@ -46,8 +46,7 @@ jobs:
       run: vendor/bin/phpunit --configuration phpunit.xml --list-tests
 
     - name: Run PHPUnit tests with coverage
-      run: |
-        vendor/bin/phpunit --configuration phpunit.xml
+      run: vendor/bin/phpunit --configuration phpunit.xml
 
     - name: Upload code coverage report
       uses: actions/upload-artifact@v3
