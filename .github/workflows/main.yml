@@ -60,7 +60,7 @@ jobs:
       if: success()
       uses: actions/upload-artifact@v3
       with:
-        name: clover-coverage-report
+        name: coverage-report
         path: coverage-report/**
       
     # - name: Run PHPUnit tests with code coverage

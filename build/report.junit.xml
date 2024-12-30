@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="E:\Xampp8.2.12\htdocs\demo_project_cicd\phpunit.xml" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.067614">
-    <testsuite name="VendorName Test Suite" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.067614">
-      <testsuite name="HelloTest" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\HelloTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.067614">
-        <testcase name="testGreet" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\HelloTest.php" line="8" class="HelloTest" classname="HelloTest" assertions="1" time="0.067614"/>
+  <testsuite name="E:\Xampp8.2.12\htdocs\demo_project_cicd\phpunit.xml" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.067098">
+    <testsuite name="VendorName Test Suite" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.067098">
+      <testsuite name="HelloTest" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\HelloTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.067098">
+        <testcase name="testGreet" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\HelloTest.php" line="8" class="HelloTest" classname="HelloTest" assertions="1" time="0.067098"/>
       </testsuite>
     </testsuite>
   </testsuite>
