@@ -23,8 +23,6 @@
 
     <logging>
         <junit outputFile="build/report.junit.xml"/>
-        <!-- Clover coverage report -->
-        <clover outputFile="coverage-report/clover.xml"/>
     </logging>
 
     <source>
@@ -32,16 +30,4 @@
             <directory suffix=".php">./app</directory>
         </include>
     </source>
-
-    <!-- Add coverage configuration here -->
-    <coverage processUncoveredFiles="true">
-        <report>
-            <html outputDirectory="coverage-report"/>
-        </report>
-        <filter>
-            <whitelist>
-                <directory suffix=".php">./app</directory>
-            </whitelist>
-        </filter>
-    </coverage>
 </phpunit>
