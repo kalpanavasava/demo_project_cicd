@@ -42,9 +42,10 @@ jobs:
     - name: Create coverage directory
       run: mkdir -p coverage-report
 
-    - name: Validate PHP syntax (index.php)
+    - name: Validate PHP syntax for all PHP files
       run: |
-        find . -type f -name "*.php" -exec php -l {} \; || { echo "Syntax error detected. Stopping execution."; exit 1; }
+        echo "Checking PHP syntax for all PHP files..."
+        find . -type f -name "*.php" -exec php -l {} \; || { echo "Syntax error detected in one of the PHP files. Stopping execution."; exit 1; }
 
     - name: List tests
       run: vendor/bin/phpunit --configuration phpunit.xml --list-tests
@@ -58,7 +59,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: clover-coverage-report
-        path: coverage-report/clover.xml
+        path: coverage-report/**
       
     # - name: Run PHPUnit tests with code coverage
     #   run: |
