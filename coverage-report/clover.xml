@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="2024-12-28T12:34:56+00:00">
+    <project timestamp="1609459200">
+        <metrics statements="200" coveredstatements="150" branches="50" coveredbranches="40" functions="75" coveredfunctions="60" lines="400" coveredlines="350" />
+    </project>
+    <file name="src/Example.php">
+        <metrics statements="20" coveredstatements="15" branches="10" coveredbranches="8" functions="5" coveredfunctions="4" lines="40" coveredlines="35" />
+        <line number="1" type="stmt" />
+        <line number="2" type="stmt" />
+        <line number="3" type="stmt" />
+    </file>
+    <file name="src/AnotherExample.php">
+        <metrics statements="30" coveredstatements="30" branches="10" coveredbranches="10" functions="10" coveredfunctions="10" lines="60" coveredlines="60" />
+        <line number="1" type="stmt" />
+        <line number="2" type="stmt" />
+    </file>
+</coverage>
