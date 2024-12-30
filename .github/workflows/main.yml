@@ -44,9 +44,7 @@ jobs:
 
     - name: Run PHPUnit tests with coverage
       run: |
-        echo "PHP Version: $(php -v)"
-        echo "PHPUnit Version: $(./vendor/bin/phpunit --version)"
-        vendor/bin/phpunit --configuration phpunit.xml --coverage-html coverage-report
+        vendor/bin/phpunit --configuration phpunit.xml --coverage-html coverage-report --debug
 
     - name: Upload code coverage report
       uses: actions/upload-artifact@v3
