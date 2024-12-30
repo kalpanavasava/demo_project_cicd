@@ -54,6 +54,7 @@ jobs:
     - name: Run PHPUnit tests with coverage
       run: |
         vendor/bin/phpunit --configuration phpunit.xml --coverage-html coverage-report --stop-on-failure
+      continue-on-error: false
 
     - name: Upload code coverage report
       if: success()
