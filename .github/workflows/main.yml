@@ -59,7 +59,7 @@ jobs:
     #   run: |
     #     vendor/bin/phpunit --configuration phpunit.xml.dist
     # vendor/bin/phpunit --configuration phpunit.xml --coverage-html coverage-report
-    #  vendor/bin/phpunit --configuration phpunit.xml --coverage-clover coverage/coverage-report.xml
+    #  vendor/bin/phpunit --configuration phpunit.xml --coverage-clover coverage-report/coverage-report.xml
 
     # - name: Upload code coverage report
     #   uses: actions/upload-artifact@v3
