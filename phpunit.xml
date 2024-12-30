@@ -2,12 +2,15 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd"
          bootstrap="vendor/autoload.php">
+
+    <!-- Test Suites -->
     <testsuites>
         <testsuite name="Application Test Suite">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
 
+    <!-- Code Coverage -->
     <coverage>
         <include>
             <directory suffix=".php">./app</directory>
