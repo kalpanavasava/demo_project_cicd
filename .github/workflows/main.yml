@@ -42,6 +42,9 @@ jobs:
     - name: Create coverage directory
       run: mkdir -p coverage-report
 
+    - name: List tests
+      run: vendor/bin/phpunit --configuration phpunit.xml --list-tests
+
     - name: Run PHPUnit tests with coverage
       run: |
         vendor/bin/phpunit --configuration phpunit.xml --coverage-html coverage-report --debug
