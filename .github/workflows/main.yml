@@ -42,11 +42,16 @@ jobs:
     - name: Create coverage directory
       run: mkdir -p coverage-report
 
+    - name: Validate PHP syntax (index.php)
+      run: |
+        php -l app/index.php || { echo "Syntax error detected in index.php"; exit 1; }
+
     - name: List tests
       run: vendor/bin/phpunit --configuration phpunit.xml --list-tests
 
     - name: Run PHPUnit tests with coverage
-      run: vendor/bin/phpunit --configuration phpunit.xml --coverage-html coverage-report --stop-on-failure
+      run: |
+        vendor/bin/phpunit --configuration phpunit.xml --coverage-html coverage-report --stop-on-failure
 
     - name: Upload code coverage report
       if: success()
