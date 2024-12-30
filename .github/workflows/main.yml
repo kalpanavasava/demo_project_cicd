@@ -44,7 +44,7 @@ jobs:
 
     - name: Validate PHP syntax (index.php)
       run: |
-        php -l app/index.php || { echo "Syntax error detected in index.php"; exit 1; }
+        find . -type f -name "*.php" -exec php -l {} \; || { echo "Syntax error detected. Stopping execution."; exit 1; }
 
     - name: List tests
       run: vendor/bin/phpunit --configuration phpunit.xml --list-tests
