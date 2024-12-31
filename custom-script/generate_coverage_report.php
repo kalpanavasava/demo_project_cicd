@@ -223,7 +223,7 @@ $html .= '}</script>';
 
 $html .= '</div></body></html>';
 
-echo $html; die;
+// echo $html;
 
 // Save the HTML report as a file and trigger download
 $reportFilePath = 'coverage-report/coverage-report.html';
