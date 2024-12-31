@@ -1,6 +1,8 @@
 <?php
 // Load the XML content from the file
-$xmlFilePath = realpath('coverage-report/coverage-report.xml');
+
+// $xmlFilePath = realpath('coverage-report/coverage-report.xml');
+$xmlFilePath = realpath(__DIR__ . '/../coverage-report/coverage-report.xml');
 if (!$xmlFilePath || !file_exists($xmlFilePath)) {
     echo "Error: XML file not found.";
     exit;
@@ -50,7 +52,7 @@ $html .= 'th, td { padding: 8px; text-align: left; }';
 $html .= 'th { background-color: #f4f4f4; }';
 $html .= '.file-name { font-weight: bold; font-size: 16px; }';
 $html .= '.line-status-cell { padding: 4px 8px; }';
-$html .= '@media (max-width: 768px) { table { font-size: 12px; overflow-x: auto; display: block; } th, td { padding: 6px 10px; } .summary .summary-item span { font-size: 14px; } .file-section, .metrics-section { padding: 10px; } h1 { font-size: 24px; } h2 { font-size: 20px; } h3 { font-size: 18px; }}';
+$html .= '@media (max-width: 768px) { table { font-size: 12px; overflow-x: auto; display: block; } th, td { padding: 6px 10px; } .summary .summary-item span { font-size: 14px; } .file-section, .metrics-section { padding: 10px; } h1 { font-size: 24px; } }';
 $html .= '.table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }';
 $html .= '.collapse-btn { padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; text-align: center; font-weight: bold; margin-bottom: 10px; }';
 $html .= '.collapse-btn:hover { background-color: #0056b3; }';
@@ -62,17 +64,32 @@ $html .= '<div class="container"><h1>Code Coverage Report</h1>';
 $html .= '<p><strong>Report Generated At:</strong> ' . $reportGeneratedAt . '</p>';  // Display date and time
 
 // Project Summary - Count files dynamically
-$totalFiles = count($xml->project->package->file);
+$totalFiles = 0;
 $totalLines = 0;
 $totalCoverableLines = 0;
 $totalCoveredLines = 0;
 $totalUncoveredLines = 0;
 
-foreach ($xml->project->package->file as $file) {
-    $totalLines += (isset($file->metrics['loc']) ? (int) $file->metrics['loc'] : 0);
-    $totalCoverableLines += (isset($file->metrics['coverable']) ? (int) $file->metrics['coverable'] : 0);
-    $totalCoveredLines += (isset($file->metrics['coveredstatements']) ? (int) $file->metrics['coveredstatements'] : 0);
-    $totalUncoveredLines += (isset($file->metrics['uncoveredstatements']) ? (int) $file->metrics['uncoveredstatements'] : 0);
+// Process files under the package
+if (isset($xml->project->package)) {
+    foreach ($xml->project->package->file as $file) {
+        $totalFiles++;
+        $totalLines += (isset($file->metrics['loc']) ? (int) $file->metrics['loc'] : 0);
+        $totalCoverableLines += (isset($file->metrics['coverable']) ? (int) $file->metrics['coverable'] : 0);
+        $totalCoveredLines += (isset($file->metrics['coveredstatements']) ? (int) $file->metrics['coveredstatements'] : 0);
+        $totalUncoveredLines += (isset($file->metrics['uncoveredstatements']) ? (int) $file->metrics['uncoveredstatements'] : 0);
+    }
+}
+
+// Process files outside of the package
+if (isset($xml->project->file)) {
+    foreach ($xml->project->file as $file) {
+        $totalFiles++;
+        $totalLines += (isset($file->metrics['loc']) ? (int) $file->metrics['loc'] : 0);
+        $totalCoverableLines += (isset($file->metrics['coverable']) ? (int) $file->metrics['coverable'] : 0);
+        $totalCoveredLines += (isset($file->metrics['coveredstatements']) ? (int) $file->metrics['coveredstatements'] : 0);
+        $totalUncoveredLines += (isset($file->metrics['uncoveredstatements']) ? (int) $file->metrics['uncoveredstatements'] : 0);
+    }
 }
 
 // Calculate overall coverage percentage
@@ -92,10 +109,12 @@ $html .= '</div>';
 
 // Files Overview Table
 $html .= '<div class="table-container"><table><thead><tr>';
-$html .= '<th>File Name</th><th>Total Lines</th><th>Coverable Lines</th><th>Covered Lines</th><th>Uncovered Lines</th><th>Methods</th><th>Statements</th><th>Elements</th><th>Coverage (%)</th>';
+$html .= '<th>File Name</th><th>Total Lines</th><th>Coverable Lines</th><th>Covered Lines</th><th>Uncovered Lines</th><th>Methods</th><th>Statements</th><th>Elements</th><th>Coverage (%)</th><th>Details</th>';
 $html .= '</tr></thead><tbody>';
 
-foreach ($xml->project->package->file as $file) {
+function processFile($file) {
+    global $html;
+
     $fileName = (string) $file['name'];
     $coveredLines = '';
     $uncoveredLines = '';
@@ -133,11 +152,14 @@ foreach ($xml->project->package->file as $file) {
     $html .= '<td>' . (isset($file->metrics['coveredstatements']) ? (int) $file->metrics['coveredstatements'] : 0) . ' (Covered)</td>';
     $html .= '<td>' . (isset($file->metrics['coverable']) ? (int) $file->metrics['coverable'] : 0) . ' (Covered)</td>';
     $html .= '<td>' . number_format($coveragePercent, 2) . '%</td>';
+    
+    // Add Expand/Collapse button in the table cell
+    $html .= '<td class="line-status-cell"><button class="collapse-btn" onclick="toggleCollapse(\'file_' . md5($fileName) . '\')">Expand/Collapse</button></td>';
+    
     $html .= '</tr>';
 
     // File-specific coverage details (expandable below the file summary row)
-    $html .= '<tr class="metrics-row"><td colspan="9">';
-    $html .= '<button class="collapse-btn" onclick="toggleCollapse(\'file_' . md5($fileName) . '\')">Expand/Collapse Details for ' . $fileName . '</button>';
+    $html .= '<tr class="metrics-row"><td colspan="10">';
     $html .= '<div id="file_' . md5($fileName) . '" class="metrics-section collapsed">';
 
     // Coverage Metrics for this file
@@ -175,8 +197,20 @@ foreach ($xml->project->package->file as $file) {
     $html .= '</div></td></tr>';
 }
 
-$html .= '</tbody></table></div>';
+// Process all files under and outside packages
+if (isset($xml->project->package)) {
+    foreach ($xml->project->package->file as $file) {
+        processFile($file);
+    }
+}
 
+if (isset($xml->project->file)) {
+    foreach ($xml->project->file as $file) {
+        processFile($file);
+    }
+}
+
+$html .= '</tbody></table></div>';
 $html .= '<script>';
 $html .= 'function toggleCollapse(fileId) {';
 $html .= '    var fileSection = document.getElementById(fileId);';
@@ -189,13 +223,12 @@ $html .= '}</script>';
 
 $html .= '</div></body></html>';
 
-// echo $html;
+echo $html; die;
 
-/*** Save the HTML report as a file and Trigger download ***/
-
+// Save the HTML report as a file and trigger download
 $reportFilePath = 'coverage-report/coverage-report.html';
 
-if(file_exists($reportFilePath)){
+if (file_exists($reportFilePath)) {
     unlink($reportFilePath); 
 }
 
@@ -206,7 +239,5 @@ header('Content-Disposition: attachment; filename="' . basename($reportFilePath)
 header('Content-Length: ' . filesize($reportFilePath));
 readfile($reportFilePath);
 
-// unlink($reportFilePath);
 exit;
-/*** Save the HTML report as a file and Trigger download ***/
 ?>

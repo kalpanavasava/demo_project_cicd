@@ -62,7 +62,7 @@ jobs:
 
     - name: Generate and Download Coverage Report
       run: |
-        php generate_coverage_report.php
+        php custom-script/generate_coverage_report.php
 
     - name: Upload code coverage report
       if: success()
