@@ -42,7 +42,7 @@ jobs:
     - name: Validate PHP syntax for all PHP files
       run: |
         echo "Checking PHP syntax for all PHP files..."
-        find ./app -type f -name "*.php" -exec php -l {} \; 
+        find ./app -type f -name "*.php" -exec php -l {} \; || exit 1
 
     - name: List tests
       run: vendor/bin/phpunit --configuration phpunit.xml --list-tests
