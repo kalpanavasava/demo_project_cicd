@@ -90,6 +90,7 @@ jobs:
         fi
         
         # Ensure the coverage-report directory exists and has files
+        mkdir -p coverage-report
         if [ -d "coverage-report" ] && [ "$(ls -A coverage-report)" ]; then
           # Copy new coverage report files
           cp -r coverage-report/* artifacts-coverage-report/
