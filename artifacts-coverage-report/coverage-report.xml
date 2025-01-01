@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1735722191">
-  <project timestamp="1735722191">
+<coverage generated="1735722757">
+  <project timestamp="1735722757">
     <file name="/home/runner/work/demo_project_cicd/demo_project_cicd/public/index.php">
       <line num="3" type="stmt" count="1"/>
       <line num="6" type="stmt" count="1"/>
