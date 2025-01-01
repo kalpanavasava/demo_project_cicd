@@ -56,9 +56,9 @@ jobs:
 
     - name: Run PHPUnit tests with code coverage report
       run: |
-        mkdir -p coverage-report
-        vendor/bin/phpunit --configuration phpunit.xml --coverage-clover coverage-report/coverage-report.xml --stop-on-failure || exit 1
-        # vendor/bin/phpunit --configuration phpunit.xml --coverage-html coverage-report/html --stop-on-failure || exit 1
+        mkdir -p artifacts-coverage-report
+        vendor/bin/phpunit --configuration phpunit.xml --coverage-clover artifacts-coverage-report/coverage-report.xml --stop-on-failure || exit 1
+        # vendor/bin/phpunit --configuration phpunit.xml --coverage-html artifacts-coverage-report/html --stop-on-failure || exit 1
 
     - name: Generate and Download Coverage Report
       run: |
@@ -68,8 +68,8 @@ jobs:
       if: success()
       uses: actions/upload-artifact@v3
       with:
-        name: coverage-report
-        path: coverage-report/**
+        name: artifacts-coverage-report
+        path: artifacts-coverage-report/**
 
   # web-deploy:
   #   name: Deploy
