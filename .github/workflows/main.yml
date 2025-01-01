@@ -79,19 +79,8 @@ jobs:
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         git remote set-url origin https://${GITHUB_TOKEN}@github.com/kalpanavasava/demo_project_cicd.git
-        
-        # Remove old coverage report files
-        if [ -d "artifacts-coverage-report" ]; then
-          git rm -r --cached artifacts-coverage-report/ || true
-          rm -rf artifacts-coverage-report/
-        fi
-        
-        # Copy new coverage report files
-        cp -r artifacts-coverage-report-new/ artifacts-coverage-report/
-        
-        # Add the new coverage report files
         git add artifacts-coverage-report/
-        git commit -m "Add updated code coverage report [skip ci]"
+        git commit -m "Add code coverage report [skip ci]"
         git push
 
   # web-deploy:
