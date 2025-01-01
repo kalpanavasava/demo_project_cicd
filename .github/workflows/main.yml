@@ -80,22 +80,28 @@ jobs:
         git config user.email "actions@github.com"
         git remote set-url origin https://${GITHUB_TOKEN}@github.com/kalpanavasava/demo_project_cicd.git
         
-        # Ensure the artifacts-coverage-report folder is populated
-        mkdir -p artifacts-coverage-report
+        # Ensure the coverage-report folder exists
+        mkdir -p coverage-report
         
-        # If artifacts-coverage-report already exists, remove the old files (keeping the folder)
-        if [ -d "artifacts-coverage-report" ]; then
-          git rm -r --cached artifacts-coverage-report/ || true
+        # Check if coverage-report directory exists and contains files
+        if [ ! -d "coverage-report" ] || [ -z "$(ls -A coverage-report)" ]; then
+          echo "No coverage report found in 'coverage-report'. Exiting."
+          exit 1
         fi
         
-        # Copy files from the artifact folder to the repository folder
-        cp -r coverage-report/* artifacts-coverage-report/
+        # If coverage-report already exists, remove the old files (keeping the folder)
+        if [ -d "coverage-reportt" ]; then
+          git rm -r --cached coverage-report/ || true
+        fi
+        
+        # Copy new coverage report files from 'artifacts-coverage-report' to 'coverage-report'
+        cp -r artifacts-coverage-report/* coverage-report/
         
         # Pull the latest changes from the remote repository
         git pull origin main --rebase
         
         # Check if there are any changes to commit
-        git diff --quiet || git add artifacts-coverage-report/
+        git diff --quiet || git add coverage-report/
         
         # Commit and push changes if there are any changes
         if git diff --cached --quiet; then
