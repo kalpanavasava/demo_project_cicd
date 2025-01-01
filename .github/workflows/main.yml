@@ -81,7 +81,7 @@ jobs:
         git remote set-url origin https://${GITHUB_TOKEN}@github.com/kalpanavasava/demo_project_cicd.git
         git add artifacts-coverage-report/
         git commit -m "Add code coverage report [skip ci]"
-        git push
+        git push 
 
     # - name: Commit and Push Coverage Report to Repository
     #   if: success()
