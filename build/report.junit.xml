@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="E:\Xampp8.2.12\htdocs\demo_project_cicd\phpunit.xml" tests="2" assertions="2" errors="0" failures="0" skipped="0" time="0.075417">
-    <testsuite name="VendorName Test Suite" tests="2" assertions="2" errors="0" failures="0" skipped="0" time="0.075417">
-      <testsuite name="HelloTest" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\HelloTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.068416">
-        <testcase name="testGreet" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\HelloTest.php" line="8" class="HelloTest" classname="HelloTest" assertions="1" time="0.068416"/>
+  <testsuite name="E:\Xampp8.2.12\htdocs\demo_project_cicd\phpunit.xml" tests="2" assertions="2" errors="0" failures="0" skipped="0" time="0.074010">
+    <testsuite name="VendorName Test Suite" tests="2" assertions="2" errors="0" failures="0" skipped="0" time="0.074010">
+      <testsuite name="HelloTest" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\HelloTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.067292">
+        <testcase name="testGreet" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\HelloTest.php" line="8" class="HelloTest" classname="HelloTest" assertions="1" time="0.067292"/>
       </testsuite>
-      <testsuite name="IndexTest" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\IndexTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.007001">
-        <testcase name="testIndex" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\IndexTest.php" line="7" class="IndexTest" classname="IndexTest" assertions="1" time="0.007001"/>
+      <testsuite name="IndexTest" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\IndexTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.006718">
+        <testcase name="testIndex" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\IndexTest.php" line="7" class="IndexTest" classname="IndexTest" assertions="1" time="0.006718"/>
       </testsuite>
     </testsuite>
   </testsuite>
