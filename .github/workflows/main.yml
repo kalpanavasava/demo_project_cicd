@@ -80,34 +80,30 @@ jobs:
         git config user.email "actions@github.com"
         git remote set-url origin https://${GITHUB_TOKEN}@github.com/kalpanavasava/demo_project_cicd.git
         
-        # Ensure the artifacts-coverage-report directory exists
+        # Ensure the artifacts-coverage-report folder is populated
         mkdir -p artifacts-coverage-report
         
-        # Remove old coverage report files if they exist
+        # If artifacts-coverage-report already exists, remove the old files (keeping the folder)
         if [ -d "artifacts-coverage-report" ]; then
           git rm -r --cached artifacts-coverage-report/ || true
-          rm -rf artifacts-coverage-report/
         fi
         
-        # Ensure the coverage-report directory exists and has files
-        mkdir -p coverage-report
-        if [ -d "coverage-report" ] && [ "$(ls -A coverage-report)" ]; then
-          # Copy new coverage report files
-          cp -r coverage-report/* artifacts-coverage-report/
-        else
-          echo "No coverage report found to copy!"
-          exit 1
-        fi
+        # Copy files from the artifact folder to the repository folder
+        cp -r coverage-report/* artifacts-coverage-report/
         
         # Pull the latest changes from the remote repository
         git pull origin main --rebase
         
-        # Add and commit new coverage report files
-        git add artifacts-coverage-report/
-        git commit -m "Add updated code coverage report [skip ci]"
+        # Check if there are any changes to commit
+        git diff --quiet || git add artifacts-coverage-report/
         
-        # Push changes to the remote repository
-        git push origin main
+        # Commit and push changes if there are any changes
+        if git diff --cached --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "Add updated code coverage report [skip ci]"
+          git push origin main
+        fi
 
     # - name: Commit and Push Coverage Report to Repository
     #   if: success()
