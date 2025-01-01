@@ -80,14 +80,17 @@ jobs:
         git config user.email "actions@github.com"
         git remote set-url origin https://${GITHUB_TOKEN}@github.com/kalpanavasava/demo_project_cicd.git
         
+        # Ensure the artifacts-coverage-report directory exists
+        mkdir -p artifacts-coverage-report
+
         # Remove old coverage report files
         if [ -d "artifacts-coverage-report" ]; then
           git rm -r --cached artifacts-coverage-report/ || true
           rm -rf artifacts-coverage-report/
         fi
         
-        # Copy new coverage report files
-        cp -r artifacts-coverage-report-new/ artifacts-coverage-report/
+        # Copy new coverage report files (update path to where the reports are generated)
+        cp -r coverage-report/* artifacts-coverage-report/
 
         # Pull the latest changes from the remote repository
         git pull origin main --rebase
@@ -95,7 +98,7 @@ jobs:
         # Add and commit new coverage report files
         git add artifacts-coverage-report/
         git commit -m "Add updated code coverage report [skip ci]"
-
+        
         # Push changes to the remote repository
         git push origin main
 
