@@ -79,45 +79,9 @@ jobs:
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         git remote set-url origin https://${GITHUB_TOKEN}@github.com/kalpanavasava/demo_project_cicd.git
-        
-        # Ensure the coverage-report folder exists
-        mkdir -p coverage-report
-        
-        # Check if artifacts-coverage-report directory exists and contains files
-        if [ ! -d "artifacts-coverage-report" ] || [ -z "$(ls -A artifacts-coverage-report)" ]; then
-          echo "No coverage report found in 'artifacts-coverage-report'. Exiting."
-          exit 1
-        fi
-        
-        # If coverage-report already exists, remove the old files (keeping the folder)
-        if [ -d "coverage-report" ]; then
-          git rm -r --cached coverage-report/ || true
-        fi
-        
-        # Copy new coverage report files from 'artifacts-coverage-report' to 'coverage-report'
-        cp -r artifacts-coverage-report/* coverage-report/
-        
-        # Check if there are any changes to commit before pulling
-        git diff --quiet || git add coverage-report/
-        
-        # Commit if there are changes
-        if ! git diff --cached --quiet; then
-          git commit -m "Add updated code coverage report [skip ci]"
-        fi
-        
-        # Pull the latest changes from the remote repository (after committing)
-        git pull origin main --rebase
-        
-        # Push changes to the remote repository
-        git push origin main
-      shell: /usr/bin/bash -e {0}
-      env:
-        COMPOSER_PROCESS_TIMEOUT: 0
-        COMPOSER_NO_INTERACTION: 1
-        COMPOSER_NO_AUDIT: 1
-        GITHUB_TOKEN: ***
-
-
+        git add artifacts-coverage-report/
+        git commit -m "Add code coverage report [skip ci]"
+        git push
 
     # - name: Commit and Push Coverage Report to Repository
     #   if: success()
