@@ -83,9 +83,9 @@ jobs:
         # Ensure the coverage-report folder exists
         mkdir -p coverage-report
         
-        # Check if coverage-report directory exists and contains files
-        if [ ! -d "coverage-report" ] || [ -z "$(ls -A coverage-report)" ]; then
-          echo "No coverage report found in 'coverage-report'. Exiting."
+        # Check if artifacts-coverage-report directory exists and contains files
+        if [ ! -d "artifacts-coverage-report" ] || [ -z "$(ls -A artifacts-coverage-report)" ]; then
+          echo "No coverage report found in 'artifacts-coverage-report'. Exiting."
           exit 1
         fi
         
