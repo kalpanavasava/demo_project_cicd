@@ -73,9 +73,12 @@ jobs:
 
     - name: Commit and Push Coverage Report to Repository
       if: success()
+      env:
+        TOKEN: ${{ secrets.TOKEN }}
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
+        git remote set-url origin https://${TOKEN}@github.com/kalpanavasava/demo_project_cicd.git
         git add artifacts-coverage-report/
         git commit -m "Add code coverage report [skip ci]"
         git push
