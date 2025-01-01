@@ -82,16 +82,22 @@ jobs:
         
         # Ensure the artifacts-coverage-report directory exists
         mkdir -p artifacts-coverage-report
-
-        # Remove old coverage report files
+        
+        # Remove old coverage report files if they exist
         if [ -d "artifacts-coverage-report" ]; then
           git rm -r --cached artifacts-coverage-report/ || true
           rm -rf artifacts-coverage-report/
         fi
         
-        # Copy new coverage report files (update path to where the reports are generated)
-        cp -r coverage-report/* artifacts-coverage-report/
-
+        # Ensure the coverage-report directory exists and has files
+        if [ -d "coverage-report" ] && [ "$(ls -A coverage-report)" ]; then
+          # Copy new coverage report files
+          cp -r coverage-report/* artifacts-coverage-report/
+        else
+          echo "No coverage report found to copy!"
+          exit 1
+        fi
+        
         # Pull the latest changes from the remote repository
         git pull origin main --rebase
         
