@@ -97,19 +97,27 @@ jobs:
         # Copy new coverage report files from 'artifacts-coverage-report' to 'coverage-report'
         cp -r artifacts-coverage-report/* coverage-report/
         
-        # Pull the latest changes from the remote repository
-        git pull origin main --rebase
-        
-        # Check if there are any changes to commit
+        # Check if there are any changes to commit before pulling
         git diff --quiet || git add coverage-report/
         
-        # Commit and push changes if there are any changes
-        if git diff --cached --quiet; then
-          echo "No changes to commit"
-        else
+        # Commit if there are changes
+        if ! git diff --cached --quiet; then
           git commit -m "Add updated code coverage report [skip ci]"
-          git push origin main
         fi
+        
+        # Pull the latest changes from the remote repository (after committing)
+        git pull origin main --rebase
+        
+        # Push changes to the remote repository
+        git push origin main
+      shell: /usr/bin/bash -e {0}
+      env:
+        COMPOSER_PROCESS_TIMEOUT: 0
+        COMPOSER_NO_INTERACTION: 1
+        COMPOSER_NO_AUDIT: 1
+        GITHUB_TOKEN: ***
+
+
 
     # - name: Commit and Push Coverage Report to Repository
     #   if: success()
