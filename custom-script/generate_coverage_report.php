@@ -1,8 +1,8 @@
 <?php
 // Load the XML content from the file
 
-// $xmlFilePath = realpath('coverage-report/coverage-report.xml');
-$xmlFilePath = realpath(__DIR__ . '/../coverage-report/coverage-report.xml');
+// $xmlFilePath = realpath('artifacts-coverage-report/coverage-report.xml');
+$xmlFilePath = realpath(__DIR__ . '/../artifacts-coverage-report/coverage-report.xml');
 if (!$xmlFilePath || !file_exists($xmlFilePath)) {
     echo "Error: XML file not found.";
     exit;
