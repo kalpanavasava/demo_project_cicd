@@ -71,6 +71,15 @@ jobs:
         name: artifacts-coverage-report
         path: artifacts-coverage-report/**
 
+    - name: Commit and Push Coverage Report to Repository
+      if: success()
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add artifacts-coverage-report/
+        git commit -m "Add code coverage report [skip ci]"
+        git push
+
   # web-deploy:
   #   name: Deploy
   #   needs: web-build
