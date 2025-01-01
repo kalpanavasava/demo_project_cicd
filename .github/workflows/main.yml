@@ -90,7 +90,7 @@ jobs:
         fi
         
         # If coverage-report already exists, remove the old files (keeping the folder)
-        if [ -d "coverage-reportt" ]; then
+        if [ -d "coverage-report" ]; then
           git rm -r --cached coverage-report/ || true
         fi
         
