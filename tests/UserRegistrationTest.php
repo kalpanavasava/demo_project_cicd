@@ -35,6 +35,6 @@ class UserRegistrationTest extends TestCase
         include 'public/users_registration.php';
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('Registration successful', $output);
+        $this->assertStringContainsString('<h2>Data Inserted Successfully!</h2>', $output);
     }
 }

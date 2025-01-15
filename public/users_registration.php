@@ -27,6 +27,13 @@ if( isset($_POST['submit']) ){
     }elseif( !filter_var($email, FILTER_VALIDATE_EMAIL) ){
         $email_error = "Invalid email format.";
         $valid = false;
+    }else{
+        // Check if the email is already in use
+        $result = mysqli_query($conn, "select * from users where email = '$email'");
+        if(mysqli_num_rows($result) > 0){
+            $email_error = "Email is already registered.";
+            $valid = false;
+        }
     }
     
     if( empty($password) ){
