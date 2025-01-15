@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="E:\Xampp8.2.12\htdocs\demo_project_cicd\phpunit.xml" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.085747">
-    <testsuite name="VendorName Test Suite" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.085747">
-      <testsuite name="UserRegistrationTest" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\UserRegistrationTest.php" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.085747">
-        <testcase name="testEmptyFields" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\UserRegistrationTest.php" line="7" class="UserRegistrationTest" classname="UserRegistrationTest" assertions="1" time="0.085747">
-          <failure type="PHPUnit\Framework\ExpectationFailedException">UserRegistrationTest::testEmptyFields&#13;
-Failed asserting that 'Connected successfully.&lt;!DOCTYPE html&gt;\r\n
+  <testsuite name="E:\Xampp8.2.12\htdocs\demo_project_cicd\phpunit.xml" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.166948">
+    <testsuite name="VendorName Test Suite" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.166948">
+      <testsuite name="UserRegistrationTest" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\UserRegistrationTest.php" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.166948">
+        <testcase name="testValidRegistration" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\UserRegistrationTest.php" line="24" class="UserRegistrationTest" classname="UserRegistrationTest" assertions="1" time="0.166948">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">UserRegistrationTest::testValidRegistration&#13;
+Failed asserting that 'Connected successfully.&lt;h2&gt;Data Inserted Successfully!&lt;/h2&gt;&lt;!DOCTYPE html&gt;\r\n
 &lt;html lang="en"&gt;\r\n
 &lt;head&gt;\r\n
     &lt;meta charset="UTF-8"&gt;\r\n
@@ -130,13 +130,30 @@ Failed asserting that 'Connected successfully.&lt;!DOCTYPE html&gt;\r\n
                                 onclick="return confirm('Are You Sure You Want To Delete?');"&gt;Delete&lt;/a&gt;\r\n
                         &lt;/td&gt; --&gt;\r\n
                     &lt;/tr&gt;\r\n
+                            \r\n
+                    &lt;tr&gt;\r\n
+                        &lt;td&gt;4&lt;/td&gt;\r\n
+                        &lt;td&gt;test 5&lt;/td&gt;\r\n
+                        &lt;td&gt;test5@gmail.com&lt;/td&gt;\r\n
+                        &lt;td&gt;&lt;/td&gt;\r\n
+                        &lt;td&gt;&lt;/td&gt;\r\n
+                        &lt;td&gt;&lt;/td&gt;\r\n
+                        &lt;td&gt;&lt;/td&gt;\r\n
+                        &lt;!-- &lt;td&gt;\r\n
+                            &lt;a href="users_registration.php?edit_id=14" class="edit_btn"&gt;Edit&lt;/a&gt;\r\n
+                        &lt;/td&gt;\r\n
+                        &lt;td&gt;\r\n
+                            &lt;a href="users_registration.php?id=14" class="del_btn"\r\n
+                                onclick="return confirm('Are You Sure You Want To Delete?');"&gt;Delete&lt;/a&gt;\r\n
+                        &lt;/td&gt; --&gt;\r\n
+                    &lt;/tr&gt;\r\n
                             &lt;/tbody&gt;\r\n
     &lt;/table&gt;\r\n
 &lt;/body&gt;\r\n
 &lt;/html&gt;\r\n
-' [ASCII](length: 5047) contains "Name is required" [ASCII](length: 16).
+' [ASCII](length: 5853) contains "Registration successful" [ASCII](length: 23).
 &#13;
-E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\UserRegistrationTest.php:19</failure>
+E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\UserRegistrationTest.php:37</failure>
         </testcase>
       </testsuite>
     </testsuite>
