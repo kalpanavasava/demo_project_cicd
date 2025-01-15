@@ -10,15 +10,16 @@ class UserRegistrationTest extends TestCase
             'name' => '',
             'email' => '',
             'password' => '',
+            'submit' => true
         ];
 
         ob_start();
         include 'public/users_registration.php';
         $output = ob_get_clean();
 
-        $this->assertStringContainsString('Name is required', $output);
-        $this->assertStringContainsString('Email is required', $output);
-        $this->assertStringContainsString('Password is required', $output);
+        $this->assertStringContainsString('Name is required.', $output);
+        $this->assertStringContainsString('Email is required.', $output);
+        $this->assertStringContainsString('Password is required.', $output);
     }
 
     public function testValidRegistration()

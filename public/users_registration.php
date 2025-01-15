@@ -1,26 +1,53 @@
 <?php
 include 'db_connection.php';
 
+$name_error = $email_error = $password_error = '';
+
 if( isset($_POST['submit']) ){
     
     $name = isset($_POST['name']) ? $_POST['name'] : '';
     $email = isset($_POST['email']) ? $_POST['email'] : '';
-    $hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $password = isset($_POST['password']) ? $_POST['password'] : '';
     $contact = isset($_POST['contact']) ? $_POST['contact'] : '';
     $city = isset($_POST['city']) ? $_POST['city'] : '';
     $gender = isset($_POST['gender']) ? $_POST['gender'] : '';
     $hobbies = isset($_POST['hobby']) ? implode(",", $_POST['hobby']) : '';
 
-    $query = "insert into users (name, email, password, contact, city, gender, hobby) 
+    // Validate fields
+    $valid = true;
+
+    if( empty($name) ){
+        $name_error = "Name is required.";
+        $valid = false;
+    }
+
+    if( empty($email) ){
+        $email_error = "Email is required.";
+        $valid = false;
+    }elseif( !filter_var($email, FILTER_VALIDATE_EMAIL) ){
+        $email_error = "Invalid email format.";
+        $valid = false;
+    }
+    
+    if( empty($password) ){
+        $password_error = "Password is required.";
+        $valid = false;
+    }
+
+    if( $valid ){
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $query = "insert into users (name, email, password, contact, city, gender, hobby) 
               values ('" . $name . "', '" . $email . "', '" . $hashed_password . "', 
                       '" . $contact . "', '" . $city . "', '" . $gender . "', 
                       '" . $hobbies . "')";
 
-    if( mysqli_query($conn, $query) ){
-        echo "<h2>Data Inserted Successfully!</h2>";
-    }else{
-        echo "<h2>Error: " . mysqli_error($conn) . "</h2>";
+        if( mysqli_query($conn, $query) ){
+            echo "<h2>Data Inserted Successfully!</h2>";
+        }else{
+            echo "<h2>Error: " . mysqli_error($conn) . "</h2>";
+        }
     }
+    
 }
 ?>
 <!DOCTYPE html>
@@ -39,15 +66,24 @@ if( isset($_POST['submit']) ){
             </tr>
             <tr>
                 <td>Name</td>
-                <td><input type="text" name="name" required></td>
+                <td>
+                    <input type="text" name="name">
+                    <div style="color: red;"><?php echo $name_error; ?></div>
+                </td>
             </tr>
             <tr>
                 <td>Email</td>
-                <td><input type="email" name="email" required></td>
+                <td>
+                    <input type="email" name="email">
+                    <div style="color: red;"><?php echo $email_error; ?></div>
+                </td>
             </tr>
             <tr>
                 <td>Password</td>
-                <td><input type="password" name="password" required></td>
+                <td>
+                    <input type="password" name="password">
+                    <div style="color: red;"><?php echo $password_error; ?></div>
+                </td>
             </tr>
             <tr>
                 <td>Contact</td>
