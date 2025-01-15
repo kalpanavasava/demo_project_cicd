@@ -223,7 +223,7 @@ $html .= '}</script>';
 
 $html .= '</div></body></html>';
 
-// echo $html;
+echo $html;die;
 
 // Save the HTML report as a file and trigger download
 $reportFilePath = 'artifacts-coverage-report/coverage-report.html';
