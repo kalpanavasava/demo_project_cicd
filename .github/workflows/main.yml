@@ -5,19 +5,20 @@ on:
     branches:
       - main  # Deploy when changes are pushed to the main branch
 
+services:
+  mysql:
+    image: mysql:8.0
+    env:
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_DATABASE: demo_project_cicd
+    ports:
+      - 3306:3306
+    options: --health-cmd='mysqladmin ping --silent' --health-interval=5s --health-timeout=3s --health-retries=3
+
 jobs:
   web-build:
     name: Build and Test
     runs-on: ubuntu-latest
-
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: "yes"
-          MYSQL_DATABASE: demo_project_cicd
-        ports:
-          - 3306:3306
 
     steps:
     - name: Checkout repository
@@ -62,6 +63,13 @@ jobs:
 
     - name: List tests
       run: vendor/bin/phpunit --configuration phpunit.xml --list-tests
+
+    - name: Wait for MySQL to be ready
+      run: |
+        while ! mysqladmin ping -h"127.0.0.1" --silent; do
+          echo "Waiting for MySQL to be ready..."
+          sleep 3
+        done
 
     - name: Run PHPUnit tests with code coverage report
       run: |
