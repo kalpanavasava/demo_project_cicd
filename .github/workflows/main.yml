@@ -14,7 +14,8 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
-          MYSQL_ROOT_PASSWORD: ""  
+          # MYSQL_ROOT_PASSWORD: ""  
+          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
           MYSQL_DATABASE: demo_project_cicd
         ports:
           - 3306:3306
