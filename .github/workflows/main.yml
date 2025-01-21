@@ -70,6 +70,7 @@ jobs:
           echo "Waiting for MySQL to be ready..."
           sleep 3
         done
+        echo "MySQL is ready!"
 
     - name: Run PHPUnit tests with code coverage report
       run: |
