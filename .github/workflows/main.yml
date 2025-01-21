@@ -10,6 +10,15 @@ jobs:
     name: Build and Test
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: "yes"
+          MYSQL_DATABASE: demo_project_cicd
+        ports:
+          - 3306:3306
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -18,7 +27,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.2'
-        extensions: mbstring, intl, bcmath, xdebug
+        extensions: mbstring, intl, bcmath, xdebug, mysqli
         coverage: xdebug
 
     - name: Install Composer globally
