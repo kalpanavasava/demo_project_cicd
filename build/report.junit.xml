@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="DatabaseConnectionTest" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\DatabaseConnectionTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.005519">
-    <testcase name="testConnection" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\DatabaseConnectionTest.php" line="22" class="DatabaseConnectionTest" classname="DatabaseConnectionTest" assertions="1" time="0.005519"/>
+  <testsuite name="DatabaseConnectionTest" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\DatabaseConnectionTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.008471">
+    <testcase name="testConnection" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\DatabaseConnectionTest.php" line="22" class="DatabaseConnectionTest" classname="DatabaseConnectionTest" assertions="1" time="0.008471"/>
   </testsuite>
 </testsuites>
