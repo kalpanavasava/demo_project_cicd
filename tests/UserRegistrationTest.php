@@ -10,7 +10,7 @@ class UserRegistrationTest extends TestCase
     // Setup method to initialize the database connection or mock it
     protected function setUp(): void
     {
-        $this->conn = new mysqli("localhost", "root", "", "demo_project_cicd");
+        $this->conn = new mysqli("127.0.0.1", "root", "", "demo_project_cicd");
         if($this->conn->connect_error){
             $this->fail("Connection failed: " . $this->conn->connect_error);
         }
