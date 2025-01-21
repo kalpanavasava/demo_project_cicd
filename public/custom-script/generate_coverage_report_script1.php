@@ -1,9 +1,9 @@
 <?php
-// Load the XML content from the file
+require '../../vendor/autoload.php';
 
-// $xmlFilePath = realpath('artifacts-coverage-report/coverage-report.xml');
-$xmlFilePath = realpath(__DIR__ . '/../artifacts-coverage-report/coverage-report.xml');
-if (!$xmlFilePath || !file_exists($xmlFilePath)) {
+// Load the XML content from the file
+$xmlFilePath = realpath(__DIR__ . '/../../artifacts-coverage-report/coverage-report.xml');
+if( !$xmlFilePath || !file_exists($xmlFilePath) ){
     echo "Error: XML file not found.";
     exit;
 }
@@ -224,7 +224,7 @@ $html .= '}</script>';
 $html .= '</div></body></html>';
 
 // Save the HTML report as a file and trigger download
-$reportFilePath = 'artifacts-coverage-report/coverage-report.html';
+$reportFilePath = '../../artifacts-coverage-report/coverage-report.html';
 
 if (file_exists($reportFilePath)) {
     unlink($reportFilePath); 

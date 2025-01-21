@@ -27,7 +27,7 @@
 
     <source>
         <include>
-            <directory suffix=".php">./public</directory>
+            <directory suffix=".php">./app</directory>
         </include>
     </source>
 </phpunit>

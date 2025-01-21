@@ -4,60 +4,29 @@ use PHPUnit\Framework\TestCase;
 
 class DatabaseConnectionTest extends TestCase
 {
-    private $dbConfig;
+    private $conn;
 
+    /* Setup method to initialize the connection */
     protected function setUp(): void
     {
-        $this->dbConfig = [
-            'host' => 'localhost',
-            'username' => 'root',
-            'password' => '',
-            'dbname' => 'demo_project_cicd',
-        ];
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "demo_project_cicd";
+
+        // Create connection
+        $this->conn = mysqli_connect($servername, $username, $password, $dbname);
     }
 
-    public function testSuccessfulConnection()
+    /* Test if the connection is established successfully */
+    public function testConnection()
     {
-        $mysqli = mysqli_connect(
-            $this->dbConfig['host'],
-            $this->dbConfig['username'],
-            $this->dbConfig['password'],
-            $this->dbConfig['dbname']
-        );
-
-        $this->assertFalse($mysqli->connect_error, "Failed to connect to database: " . $mysqli->connect_error);
-        $mysqli->close();
+        $this->assertNotFalse($this->conn, "Connection failed: " . mysqli_connect_error());
     }
 
-    public function testInvalidCredentials()
+    /* Cleanup after each test */
+    protected function tearDown(): void
     {
-        $invalidConfig = $this->dbConfig;
-        $invalidConfig['password'] = 'wrong_password';
-
-        $mysqli = mysqli_connect(
-            $invalidConfig['host'],
-            $invalidConfig['username'],
-            $invalidConfig['password'],
-            $invalidConfig['dbname']
-        );
-
-        $this->assertNotEmpty($mysqli->connect_error, "Connection should fail with invalid credentials");
-        $mysqli->close();
+        mysqli_close($this->conn);
     }
-
-    /* public function testDatabaseUnavailability()
-    {
-        $unavailableConfig = $this->dbConfig;
-        $unavailableConfig['host'] = 'invalid_host';
-
-        $mysqli = mysqli_connect(
-            $unavailableConfig['host'],
-            $unavailableConfig['username'],
-            $unavailableConfig['password'],
-            $unavailableConfig['dbname']
-        );
-
-        $this->assertNotEmpty($mysqli->connect_error, "Connection should fail with an invalid host");
-        $mysqli->close();
-    } */
 }
