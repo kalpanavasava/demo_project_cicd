@@ -15,10 +15,30 @@ jobs:
       DB_NAME: ${{ secrets.DB_NAME }}
 
     steps:
+    - name: Debug MySQL connection
+      run: |
+        echo "MySQL Host: ${DB_HOST}"
+        echo "MySQL User: ${DB_USER}"
+
     - name: Test MySQL Connection
       run: |
         echo "Testing MySQL connection..."
         mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASSWORD}" -e "SHOW DATABASES;"
+      
+    - name: Wait for MySQL to be ready (with timeout)
+      run: |
+        MAX_TRIES=60
+        COUNT=0
+        while ! mysqladmin ping -h"${{ secrets.DB_HOST }}" -u"${{ secrets.DB_USER }}" -p"${{ secrets.DB_PASSWORD }}" --silent; do
+          if [ $COUNT -ge $MAX_TRIES ]; then
+            echo "MySQL did not become ready in time, exiting."
+            exit 1
+          fi
+          echo "Waiting for MySQL to be ready..."
+          sleep 3
+          COUNT=$((COUNT+1))
+        done
+        echo "MySQL is ready!"
 
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -61,21 +81,6 @@ jobs:
 
     - name: List tests
       run: vendor/bin/phpunit --configuration phpunit.xml --list-tests
-
-    - name: Wait for MySQL to be ready (with timeout)
-      run: |
-        MAX_TRIES=60
-        COUNT=0
-        while ! mysqladmin ping -h"${{ secrets.DB_HOST }}" -u"${{ secrets.DB_USER }}" -p"${{ secrets.DB_PASSWORD }}" --silent; do
-          if [ $COUNT -ge $MAX_TRIES ]; then
-            echo "MySQL did not become ready in time, exiting."
-            exit 1
-          fi
-          echo "Waiting for MySQL to be ready..."
-          sleep 3
-          COUNT=$((COUNT+1))
-        done
-        echo "MySQL is ready!"
 
     - name: Run PHPUnit tests with code coverage report
       run: |
