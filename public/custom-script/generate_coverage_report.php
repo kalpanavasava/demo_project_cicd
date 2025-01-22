@@ -1,5 +1,5 @@
 <?php
-require '../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 // Load the XML content from the file
 $xmlFilePath = realpath(__DIR__ . '/../../artifacts-coverage-report/coverage-report.xml');
@@ -277,7 +277,7 @@ $html .= '</body></html>';
 // echo $html;
 
 // Save the HTML report as a file and trigger download
-$reportFilePath = '../../artifacts-coverage-report/coverage-report.html';
+$reportFilePath = __DIR__ . '/../../artifacts-coverage-report/coverage-report.html';
 
 if (file_exists($reportFilePath)) {
     unlink($reportFilePath); 
