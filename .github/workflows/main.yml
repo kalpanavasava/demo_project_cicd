@@ -25,7 +25,7 @@ jobs:
         extensions: mbstring, intl, bcmath, xdebug, mysqli
         coverage: xdebug
     
-    - name: Debug MySQL Connection
+    - name: Debug MySQL connection
       run: |
         echo "MySQL Host: ${DB_HOST}"
         echo "MySQL User: ${DB_USER}"
