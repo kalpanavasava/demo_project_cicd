@@ -26,7 +26,7 @@ jobs:
         coverage: xdebug
     
     - name: Install MySQL Client
-        run: sudo apt-get install mysql-client -y
+      run: sudo apt-get install mysql-client -y
     
     - name: Debug MySQL connection
       run: |
