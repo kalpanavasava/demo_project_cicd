@@ -60,14 +60,14 @@ jobs:
 
     - name: Test MySQL Connection
       run: |
+        echo "Testing MySQL connection..."
         mysql -h"${{ secrets.DB_HOST }}" -u"${{ secrets.DB_USER }}" -p"${{ secrets.DB_PASSWORD }}" -e "SHOW DATABASES;"
 
     - name: Wait for MySQL to be ready (with timeout)
       run: |
         MAX_TRIES=60
         COUNT=0
-        export MYSQL_PWD="${{ secrets.DB_PASSWORD }}"
-        while ! mysqladmin ping -h"${{ secrets.DB_HOST }}" -u"${{ secrets.DB_USER }}" --silent; do
+        while ! mysqladmin ping -h"${{ secrets.DB_HOST }}" -u"${{ secrets.DB_USER }}" -p"${{ secrets.DB_PASSWORD }}" --silent; do
           if [ $COUNT -ge $MAX_TRIES ]; then
             echo "MySQL did not become ready in time, exiting."
             exit 1
