@@ -19,6 +19,8 @@ jobs:
       run: |
         echo "MySQL Host: ${DB_HOST}"
         echo "MySQL User: ${DB_USER}"
+        echo "MySQL User: ${DB_PASSWORD}"
+        echo "MySQL User: ${DB_NAME}"
 
     - name: Test MySQL Connection
       run: |
