@@ -25,6 +25,9 @@ jobs:
         extensions: mbstring, intl, bcmath, xdebug, mysqli
         coverage: xdebug
     
+    - name: Install MySQL Client
+        run: sudo apt-get install mysql-client -y
+    
     - name: Debug MySQL connection
       run: |
         echo "MySQL Host: ${DB_HOST}"
