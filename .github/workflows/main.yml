@@ -9,10 +9,10 @@ jobs:
   web-build:
     runs-on: ubuntu-latest
     env:
-      DB_HOST: ${{ secrets.db_host }}
-      DB_USER: ${{ secrets.db_user }}
-      DB_PASSWORD: ${{ secrets.db_password }}
-      DB_NAME: ${{ secrets.db_name }}
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_NAME: ${{ secrets.DB_NAME }}
 
     steps:
     - name: Checkout repository
@@ -27,25 +27,21 @@ jobs:
     
     - name: Debug MySQL Connection
       run: |
-        echo "MySQL Host: ${db_host}"
-        echo "MySQL User: ${db_user}"
-        echo "MySQL Password: ${db_password}"
-        echo "MySQL Database: ${db_name}"
+        echo "MySQL Host: ${DB_HOST}"
+        echo "MySQL User: ${DB_USER}"
+        echo "MySQL Password: ${DB_PASSWORD}"
+        echo "MySQL Database: ${DB_NAME}"
 
     - name: Test MySQL Connection
       run: |
         echo "Testing MySQL connection..."
-        mysql -h"${db_host}" -u"${db_user}" -p"${db_password}" -e "SHOW DATABASES;" || exit 1
-      env:
-        DB_HOST: ${{ secrets.db_host }}
-        DB_USER: ${{ secrets.db_user }}
-        DB_PASSWORD: ${{ secrets.db_password }}
+        mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASSWORD}" -e "SHOW DATABASES;" || exit 1
 
     - name: Wait for MySQL to be ready (with timeout)
       run: |
         MAX_TRIES=60
         COUNT=0
-        while ! mysqladmin ping -h"${db_host}" -u"${db_user}" -p"${db_password}" --silent; do
+        while ! mysqladmin ping -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASSWORD}" --silent; do
           if [ $COUNT -ge $MAX_TRIES ]; then
             echo "MySQL did not become ready in time, exiting."
             exit 1
