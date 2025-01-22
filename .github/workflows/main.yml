@@ -24,11 +24,18 @@ jobs:
         php-version: '8.2'
         extensions: mbstring, intl, bcmath, xdebug, mysqli
         coverage: xdebug
+    
+    - name: Debug MySQL Connection
+        run: |
+          echo "MySQL Host: ${db_host}"
+          echo "MySQL User: ${db_user}"
+          echo "MySQL Password: ${db_password}"
+          echo "MySQL Database: ${db_name}"
 
     - name: Test MySQL Connection
       run: |
         echo "Testing MySQL connection..."
-        mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASSWORD}" -e "SHOW DATABASES;" || exit 1
+        mysql -h"${db_host}" -u"${db_user}" -p"${db_password}" -e "SHOW DATABASES;" || exit 1
       env:
         DB_HOST: ${{ secrets.db_host }}
         DB_USER: ${{ secrets.db_user }}
@@ -38,7 +45,7 @@ jobs:
       run: |
         MAX_TRIES=60
         COUNT=0
-        while ! mysqladmin ping -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASSWORD}" --silent; do
+        while ! mysqladmin ping -h"${db_host}" -u"${db_user}" -p"${db_password}" --silent; do
           if [ $COUNT -ge $MAX_TRIES ]; then
             echo "MySQL did not become ready in time, exiting."
             exit 1
