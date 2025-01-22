@@ -26,11 +26,11 @@ jobs:
         coverage: xdebug
     
     - name: Debug MySQL Connection
-        run: |
-          echo "MySQL Host: ${db_host}"
-          echo "MySQL User: ${db_user}"
-          echo "MySQL Password: ${db_password}"
-          echo "MySQL Database: ${db_name}"
+      run: |
+        echo "MySQL Host: ${db_host}"
+        echo "MySQL User: ${db_user}"
+        echo "MySQL Password: ${db_password}"
+        echo "MySQL Database: ${db_name}"
 
     - name: Test MySQL Connection
       run: |
