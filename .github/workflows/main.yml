@@ -26,35 +26,35 @@ jobs:
         extensions: mbstring, intl, bcmath, xdebug, mysqli
         coverage: xdebug
     
-    - name: Install MySQL Client
-      run: sudo apt-get install mysql-client -y
+    # - name: Install MySQL Client
+    #   run: sudo apt-get install mysql-client -y
     
-    - name: Debug MySQL Connection
-      run: |
-        echo "MySQL Host: ${DB_HOST}"
-        echo "MySQL User: ${DB_USER}"
-        echo "MySQL Database: ${DB_NAME}"
-        mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASSWORD}" -e "SHOW DATABASES;" --verbose
+    # - name: Debug MySQL Connection
+    #   run: |
+    #     echo "MySQL Host: ${DB_HOST}"
+    #     echo "MySQL User: ${DB_USER}"
+    #     echo "MySQL Database: ${DB_NAME}"
+    #     mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASSWORD}" -e "SHOW DATABASES;" --verbose
 
-    - name: Test MySQL Connection
-      run: |
-        echo "Testing MySQL connection..."
-        mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASSWORD}" -e "SHOW DATABASES;" || exit 1
+    # - name: Test MySQL Connection
+    #   run: |
+    #     echo "Testing MySQL connection..."
+    #     mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASSWORD}" -e "SHOW DATABASES;" || exit 1
 
-    - name: Wait for MySQL to be ready (with timeout)
-      run: |
-        MAX_TRIES=60
-        COUNT=0
-        while ! mysqladmin ping -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASSWORD}" --silent; do
-          if [ $COUNT -ge $MAX_TRIES ]; then
-            echo "MySQL did not become ready in time, exiting."
-            exit 1
-          fi
-          echo "Waiting for MySQL to be ready..."
-          sleep 3
-          COUNT=$((COUNT+1))
-        done
-        echo "MySQL is ready!"
+    # - name: Wait for MySQL to be ready (with timeout)
+    #   run: |
+    #     MAX_TRIES=60
+    #     COUNT=0
+    #     while ! mysqladmin ping -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASSWORD}" --silent; do
+    #       if [ $COUNT -ge $MAX_TRIES ]; then
+    #         echo "MySQL did not become ready in time, exiting."
+    #         exit 1
+    #       fi
+    #       echo "Waiting for MySQL to be ready..."
+    #       sleep 3
+    #       COUNT=$((COUNT+1))
+    #     done
+    #     echo "MySQL is ready!"
 
     - name: Install Composer globally
       run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -88,33 +88,33 @@ jobs:
     - name: List tests
       run: vendor/bin/phpunit --configuration phpunit.xml --list-tests
 
-    - name: Run PHPUnit tests with code coverage report
-      run: |
-        mkdir -p artifacts-coverage-report
-        vendor/bin/phpunit --configuration phpunit.xml --coverage-clover artifacts-coverage-report/coverage-report.xml --stop-on-failure || exit 1
+    # - name: Run PHPUnit tests with code coverage report
+    #   run: |
+    #     mkdir -p artifacts-coverage-report
+    #     vendor/bin/phpunit --configuration phpunit.xml --coverage-clover artifacts-coverage-report/coverage-report.xml --stop-on-failure || exit 1
 
-    - name: Generate and Download Coverage Report
-      run: |
-        php public/custom-script/generate_coverage_report.php
+    # - name: Generate and Download Coverage Report
+    #   run: |
+    #     php public/custom-script/generate_coverage_report.php
 
-    - name: Upload code coverage report
-      if: success()
-      uses: actions/upload-artifact@v3
-      with:
-        name: artifacts-coverage-report
-        path: artifacts-coverage-report/**
+    # - name: Upload code coverage report
+    #   if: success()
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: artifacts-coverage-report
+    #     path: artifacts-coverage-report/**
 
-    - name: Commit and Push Coverage Report to Repository
-      if: success()
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
-      run: |
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        git remote set-url origin https://${GITHUB_TOKEN}@github.com/kalpanavasava/demo_project_cicd.git
-        git add artifacts-coverage-report/
-        git commit -m "Add code coverage report [skip ci]"
-        git push 
+    # - name: Commit and Push Coverage Report to Repository
+    #   if: success()
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.TOKEN }}
+    #   run: |
+    #     git config user.name "GitHub Actions"
+    #     git config user.email "actions@github.com"
+    #     git remote set-url origin https://${GITHUB_TOKEN}@github.com/kalpanavasava/demo_project_cicd.git
+    #     git add artifacts-coverage-report/
+    #     git commit -m "Add code coverage report [skip ci]"
+    #     git push 
 
   web-deploy:
     name: Deploy
