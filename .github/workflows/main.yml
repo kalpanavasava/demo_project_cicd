@@ -140,8 +140,9 @@ jobs:
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
         server-dir: /public_html/demo_project_cicd/
-        local-dir: ./
+        local-dir: ./  # Local directory to deploy
         dry-run: true   # Run a dry-run to test without actually uploading anything
-        log-level: debug # Set log level to debug for detailed logging
+        log-level: verbose # Use "verbose" for detailed logging
+
  
 
