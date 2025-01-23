@@ -56,6 +56,10 @@ jobs:
         done
         echo "MySQL is ready!"
 
+    - name: Fix execute permissions for PHPUnit
+      run: |
+        chmod +x vendor/bin/phpunit
+
     - name: Run PHPUnit tests with code coverage report
       run: |
         mkdir -p artifacts-coverage-report
