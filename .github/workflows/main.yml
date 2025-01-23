@@ -59,11 +59,11 @@ jobs:
     # Wait for MySQL to be ready
     - name: Wait for MySQL to be ready
       run: |
-        bash ./wait-for-it.sh mysql:3306 --timeout=60 --strict -- echo "MySQL is ready!" || (echo "MySQL is not ready, exiting." && exit 1)
-
-    - name: Check MySQL Logs (for debugging)
-      run: |
-        docker logs mysql
+        while ! mysqladmin ping -h"127.0.0.1" --silent; do
+          echo "Waiting for MySQL to be ready..."
+          sleep 3
+        done
+        echo "MySQL is ready!"
 
     - name: Run PHPUnit tests with code coverage report
       run: |
