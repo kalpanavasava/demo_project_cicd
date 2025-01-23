@@ -50,16 +50,9 @@ jobs:
 
     - name: Wait for MySQL to be ready
       run: |
-        MAX_TRIES=120
-        COUNT=0
-        while ! mysqladmin ping -h "localhost" -u "root" --silent; do
-          if [ $COUNT -ge $MAX_TRIES ]; then
-            echo "MySQL did not become ready in time, exiting."
-            exit 1
-          fi
+        while ! mysqladmin ping -h"127.0.0.1" --silent; do
           echo "Waiting for MySQL to be ready..."
           sleep 3
-          COUNT=$((COUNT+1))
         done
         echo "MySQL is ready!"
 
