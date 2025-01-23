@@ -51,12 +51,8 @@ jobs:
     - name: Download wait-for-it.sh script
       run: |
         curl -sSL https://github.com/vishnubob/wait-for-it/releases/download/v2.5.0/wait-for-it.sh -o wait-for-it.sh
-        ls -l wait-for-it.sh  # Check if the script exists and has executable permissions
-        cat wait-for-it.sh    # Display the contents of the script to verify it was downloaded correctly
-
-    # Make the script executable
-    - name: Make wait-for-it script executable
-      run: chmod +x wait-for-it.sh
+        chmod +x wait-for-it.sh   # Ensure it's executable
+        cat wait-for-it.sh        # Show the contents of the script (to ensure it's downloaded properly)
 
     # Wait for MySQL to be ready
     - name: Wait for MySQL to be ready
