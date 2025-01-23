@@ -21,60 +21,52 @@ jobs:
           - 3306:3306
         options: --health-cmd="mysqladmin ping -h mysql --silent" --health-interval=5s --health-timeout=3s --health-retries=3
 
-    env:
-      DB_HOST: mysql
-      DB_USER: root
-      DB_PASSWORD: ""
-      DB_DATABASE: demo_project_cicd
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up PHP and MySQL
-      run: |
-        sudo apt-get update
-        sudo apt-get install mysql-client
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, intl, bcmath, xdebug, mysqli
+          coverage: xdebug
 
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.2'
-        extensions: mbstring, intl, bcmath, xdebug, mysqli
-        coverage: xdebug
+      - name: Install Composer globally
+        run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-    - name: Install Composer globally
-      run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist
 
-    - name: Install Composer dependencies
-      run: |
-        composer install --no-interaction --prefer-dist
+      - name: Wait for MySQL to be ready
+        run: |
+          MAX_TRIES=60
+          COUNT=0
+          while ! mysqladmin ping -h "mysql" --silent; do
+            if [ $COUNT -ge $MAX_TRIES ]; then
+              echo "MySQL did not become ready in time, exiting."
+              exit 1
+            fi
+            echo "Waiting for MySQL to be ready..."
+            sleep 5
+            COUNT=$((COUNT+1))
+          done
+          echo "MySQL is ready!"
 
-    - name: List all Docker containers
-      run: |
-        docker ps -a
+      - name: Verify MySQL database
+        run: |
+          mysql -h mysql -u root -e "SHOW DATABASES;"
 
-    - name: Wait for MySQL to be ready
-      run: |
-        while ! mysqladmin ping -h"127.0.0.1" --silent; do
-          echo "Waiting for MySQL to be ready..."
-          sleep 3
-        done
-        echo "MySQL is ready!"
+      - name: Run PHPUnit tests with code coverage report
+        run: |
+          mkdir -p artifacts-coverage-report
+          vendor/bin/phpunit --configuration phpunit.xml --coverage-clover artifacts-coverage-report/coverage-report.xml --stop-on-failure || exit 1
 
-    - name: Fix execute permissions for PHPUnit
-      run: |
-        chmod +x vendor/bin/phpunit
+      - name: Upload code coverage report
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts-coverage-report
+          path: artifacts-coverage-report/**
 
-    - name: Run PHPUnit tests with code coverage report
-      run: |
-        mkdir -p artifacts-coverage-report
-        vendor/bin/phpunit --configuration phpunit.xml --coverage-clover artifacts-coverage-report/coverage-report.xml --stop-on-failure || exit 1
-
-    - name: Upload code coverage report
-      if: success()
-      uses: actions/upload-artifact@v3
-      with:
-        name: artifacts-coverage-report
-        path: artifacts-coverage-report/**
 
