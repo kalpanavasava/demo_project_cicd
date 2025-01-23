@@ -14,24 +14,15 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
-          MYSQL_ROOT_PASSWORD: rootpassword
+          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
           MYSQL_DATABASE: demo_project_cicd
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping -h mysql --silent" --health-interval=10s --health-timeout=10s --health-retries=5
+        options: --health-cmd="mysqladmin ping -h localhost --silent" --health-interval=5s --health-timeout=3s --health-retries=3
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-
-    - name: Install wait-for-it
-      run: |
-        curl -sSL https://github.com/vishnubob/wait-for-it/releases/download/v2.5.0/wait-for-it.sh -o wait-for-it.sh
-        chmod +x wait-for-it.sh
-
-    - name: Wait for MySQL to be ready
-      run: |
-        ./wait-for-it.sh mysql:3306 --timeout=60 --strict -- echo "MySQL is ready!"
 
     - name: Set up PHP and MySQL
       run: |
@@ -56,6 +47,22 @@ jobs:
       run: |
         docker ps -a
 
+    # Download and prepare wait-for-it.sh script
+    - name: Download wait-for-it.sh script
+      run: |
+        curl -sSL https://github.com/vishnubob/wait-for-it/releases/download/v2.5.0/wait-for-it.sh -o wait-for-it.sh
+        ls -l wait-for-it.sh  # Check if the script exists and has executable permissions
+        cat wait-for-it.sh    # Display the contents of the script to verify it was downloaded correctly
+
+    # Make the script executable
+    - name: Make wait-for-it script executable
+      run: chmod +x wait-for-it.sh
+
+    # Wait for MySQL to be ready
+    - name: Wait for MySQL to be ready
+      run: |
+        ./wait-for-it.sh mysql:3306 --timeout=60 --strict -- echo "MySQL is ready!"
+
     - name: Run PHPUnit tests with code coverage report
       run: |
         mkdir -p artifacts-coverage-report
@@ -67,6 +74,3 @@ jobs:
       with:
         name: artifacts-coverage-report
         path: artifacts-coverage-report/**
-
-
-
