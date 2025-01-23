@@ -9,19 +9,26 @@ jobs:
   web-build:
     name: Build and Test
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: demo_project_cicd
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping --silent" --health-start-period=10s --health-retries=10
+
     env:
       DB_HOST: ${{ secrets.DB_HOST }}
       DB_USER: ${{ secrets.DB_USER }}
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       DB_NAME: ${{ secrets.DB_NAME }}
-
+    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-
-    - name: Install MySQL Client
-      run: sudo apt-get install mysql-client -y
-
+    
     - name: Test MySQL connection
       run: |
         mysql -h "${{ secrets.DB_HOST }}" -u "${{ secrets.DB_USER }}" -p"${{ secrets.DB_PASSWORD }}" -e "SHOW DATABASES;"
