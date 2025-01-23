@@ -52,12 +52,17 @@ jobs:
       run: |
         curl -sSL https://github.com/vishnubob/wait-for-it/releases/download/v2.5.0/wait-for-it.sh -o wait-for-it.sh
         chmod +x wait-for-it.sh   # Ensure it's executable
+        dos2unix wait-for-it.sh   # Convert Windows line endings to Unix line endings
         cat wait-for-it.sh        # Show the contents of the script (to ensure it's downloaded properly)
 
-    # Wait for MySQL to be ready
+    # Wait for MySQL to be ready using wait-for-it.sh
     - name: Wait for MySQL to be ready
       run: |
-        ./wait-for-it.sh mysql:3306 --timeout=60 --strict -- echo "MySQL is ready!"
+        ./wait-for-it.sh mysql:3306 --timeout=60 --strict -- echo "MySQL is ready!" || (echo "MySQL is not ready, exiting." && exit 1)
+
+    - name: Check MySQL Logs (for debugging)
+      run: |
+        docker logs mysql
 
     - name: Run PHPUnit tests with code coverage report
       run: |
