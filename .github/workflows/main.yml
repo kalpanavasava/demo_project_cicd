@@ -12,13 +12,14 @@ jobs:
 
     services:
       mysql:
-        image: mysql:8
+        image: mysql:8.0
+        env:
+          # MYSQL_ROOT_PASSWORD: ""  
+          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+          MYSQL_DATABASE: demo_project_cicd
         ports:
           - 3306:3306
-        env:
-          MYSQL_ROOT_PASSWORD: ""  
-          MYSQL_DATABASE: demo_project_cicd  
-        options: --health-cmd="mysqladmin ping --silent" --health-timeout=60s --health-retries=5
+        options: --health-cmd="mysqladmin ping -h localhost --silent" --health-interval=5s --health-timeout=3s --health-retries=3
 
     steps:
     - name: Checkout repository
@@ -43,9 +44,13 @@ jobs:
       run: |
         composer install --no-interaction --prefer-dist
 
+    - name: View MySQL logs
+      run: |
+        docker logs mysql
+
     - name: Wait for MySQL to be ready
       run: |
-        MAX_TRIES=120  # Increased retries to give MySQL more time to start
+        MAX_TRIES=120
         COUNT=0
         while ! mysqladmin ping -h "localhost" -u "root" --silent; do
           if [ $COUNT -ge $MAX_TRIES ]; then
@@ -69,3 +74,4 @@ jobs:
       with:
         name: artifacts-coverage-report
         path: artifacts-coverage-report/**
+
