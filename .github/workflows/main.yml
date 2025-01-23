@@ -52,6 +52,7 @@ jobs:
       run: |
         curl -sSL https://github.com/vishnubob/wait-for-it/releases/download/v2.5.0/wait-for-it.sh -o wait-for-it.sh
         chmod +x wait-for-it.sh   # Ensure it's executable
+        sudo apt-get install dos2unix # Install dos2unix
         dos2unix wait-for-it.sh   # Convert Windows line endings to Unix line endings
         cat wait-for-it.sh        # Show the contents of the script (to ensure it's downloaded properly)
 
