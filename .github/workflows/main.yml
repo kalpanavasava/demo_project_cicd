@@ -56,10 +56,10 @@ jobs:
         dos2unix wait-for-it.sh   # Convert Windows line endings to Unix line endings
         cat wait-for-it.sh        # Show the contents of the script (to ensure it's downloaded properly)
 
-    # Wait for MySQL to be ready using wait-for-it.sh
+    # Wait for MySQL to be ready
     - name: Wait for MySQL to be ready
       run: |
-        ./wait-for-it.sh mysql:3306 --timeout=60 --strict -- echo "MySQL is ready!" || (echo "MySQL is not ready, exiting." && exit 1)
+        bash ./wait-for-it.sh mysql:3306 --timeout=60 --strict -- echo "MySQL is ready!" || (echo "MySQL is not ready, exiting." && exit 1)
 
     - name: Check MySQL Logs (for debugging)
       run: |
