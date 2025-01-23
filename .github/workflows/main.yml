@@ -19,7 +19,7 @@ jobs:
           MYSQL_DATABASE: demo_project_cicd
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping -h localhost --silent" --health-interval=5s --health-timeout=3s --health-retries=3
+        options: --health-cmd="mysqladmin ping -h mysql --silent" --health-interval=5s --health-timeout=3s --health-retries=3
 
     env:
       DB_HOST: mysql
