@@ -9,18 +9,9 @@ jobs:
   web-build:
     name: Build and Test
     runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: demo_project_cicd
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping --silent" --health-start-period=10s --health-retries=10
 
     env:
-      DB_HOST: mysql
+      DB_HOST: ${{ secrets.DB_HOST }}
       DB_USER: ${{ secrets.DB_USER }}
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       DB_NAME: ${{ secrets.DB_NAME }}
@@ -29,29 +20,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Wait for MySQL to be ready
-      run: |
-        for i in {1..30}; do
-          if mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASSWORD" -e "SHOW DATABASES;"; then
-            echo "MySQL is ready!"
-            break
-          else
-            echo "Waiting for MySQL to be ready..."
-            sleep 5
-          fi
-        done
+    - name: Install MySQL Client
+      run: sudo apt-get install mysql-client -y
 
-    - name: Run tests
+    - name: Test MySQL connection
       run: |
-        mysql -h "${{ secrets.DB_HOST }}" -u "${{ secrets.DB_USER }}" -p"${{ secrets.DB_PASSWORD }}" -e "SHOW DATABASES;"
-
-    - name: Cache Composer dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.composer/cache/files  
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-composer-
+        echo "Testing MySQL connection..."
+        mysql -h "${DB_HOST}" -u "${DB_USER}" -p"${DB_PASSWORD}" -e "SHOW DATABASES;" || exit 1
 
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
