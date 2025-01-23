@@ -44,9 +44,9 @@ jobs:
       run: |
         composer install --no-interaction --prefer-dist
 
-    - name: View MySQL logs
+    - name: List all Docker containers
       run: |
-        docker logs mysql
+        docker ps -a
 
     - name: Wait for MySQL to be ready
       run: |
