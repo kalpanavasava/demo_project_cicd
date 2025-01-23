@@ -9,24 +9,15 @@ jobs:
   web-build:
     name: Build and Test
     runs-on: ubuntu-latest
-
     env:
       DB_HOST: ${{ secrets.DB_HOST }}
       DB_USER: ${{ secrets.DB_USER }}
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       DB_NAME: ${{ secrets.DB_NAME }}
-
+      
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-
-    - name: Install MySQL Client
-      run: sudo apt-get install mysql-client -y
-
-    - name: Test MySQL connection
-      run: |
-        echo "Testing MySQL connection..."
-        mysql -h "${DB_HOST}" -u "${DB_USER}" -p"${DB_PASSWORD}" -e "SHOW DATABASES;" || exit 1
 
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
@@ -34,6 +25,18 @@ jobs:
         php-version: '8.2'
         extensions: mbstring, intl, bcmath, xdebug, mysqli
         coverage: xdebug
+
+    - name: Install Composer globally
+      run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+    - name: Install Composer dependencies
+      run: |
+        composer install --no-interaction --prefer-dist
+
+    - name: Test MySQL connection
+      run: |
+        echo "Testing MySQL connection..."
+        mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASSWORD}" -e "SHOW DATABASES;" || exit 1
     
     # - name: Install MySQL Client
     #   run: sudo apt-get install mysql-client -y
@@ -64,13 +67,6 @@ jobs:
     #       COUNT=$((COUNT+1))
     #     done
     #     echo "MySQL is ready!"
-
-    - name: Install Composer globally
-      run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-    - name: Install Composer dependencies
-      run: |
-        composer install --no-interaction --prefer-dist
 
     - name: Verify PHPUnit installation
       run: |
