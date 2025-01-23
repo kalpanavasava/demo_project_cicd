@@ -33,6 +33,9 @@ jobs:
       run: |
         composer install --no-interaction --prefer-dist
 
+    - name: Install MySQL client
+      run: sudo apt-get install -y mysql-client
+
     - name: Test MySQL connection
       run: |
         echo "Testing MySQL connection..."
