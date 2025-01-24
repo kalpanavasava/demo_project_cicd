@@ -25,6 +25,7 @@ class UserRegistrationTest extends TestCase
     protected function tearDown(): void
     {
         $this->conn->query("DELETE FROM users WHERE email = 'test_user@gmail.com'");
+        $this->conn->query("DELETE FROM users WHERE email = 'kalpana_test@gmail.com'");
         $this->conn->close();
     }
 
