@@ -9,9 +9,9 @@ class DatabaseConnectionTest extends TestCase
     /* Setup method to initialize the connection */
     protected function setUp(): void
     {
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
+        $servername = "184.168.102.106";
+        $username = "demo_project_cicd";
+        $password = "C]3*]9I23sFa";
         $dbname = "demo_project_cicd";
 
         // Create connection
