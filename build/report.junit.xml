@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="UserRegistrationTest" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\UserRegistrationTest.php" tests="5" assertions="6" errors="0" failures="0" skipped="0" time="10.685745">
-    <testcase name="testMissingEmail" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\UserRegistrationTest.php" line="66" class="UserRegistrationTest" classname="UserRegistrationTest" assertions="1" time="2.115337"/>
-    <testcase name="testMissingName" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\UserRegistrationTest.php" line="48" class="UserRegistrationTest" classname="UserRegistrationTest" assertions="1" time="2.083719"/>
-    <testcase name="testDuplicateEmail" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\UserRegistrationTest.php" line="103" class="UserRegistrationTest" classname="UserRegistrationTest" assertions="2" time="2.200868"/>
-    <testcase name="testInvalidEmailRegistration" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\UserRegistrationTest.php" line="84" class="UserRegistrationTest" classname="UserRegistrationTest" assertions="1" time="2.076765"/>
-    <testcase name="testValidUserRegistration" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\UserRegistrationTest.php" line="29" class="UserRegistrationTest" classname="UserRegistrationTest" assertions="1" time="2.209055"/>
+  <testsuite name="DatabaseConnectionTest" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\DatabaseConnectionTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.773723">
+    <testcase name="testConnection" file="E:\Xampp8.2.12\htdocs\demo_project_cicd\tests\DatabaseConnectionTest.php" line="19" class="DatabaseConnectionTest" classname="DatabaseConnectionTest" assertions="1" time="0.773723"/>
   </testsuite>
 </testsuites>

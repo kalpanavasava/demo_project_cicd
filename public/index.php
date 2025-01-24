@@ -3,7 +3,7 @@
 require '../vendor/autoload.php';
 
 // Include the database connection
-include '../config/config.php';
+require_once '../config/config.php';
 include '../config/db_connection.php';
 
 use App\Models\User;
