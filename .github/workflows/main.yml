@@ -141,3 +141,4 @@ jobs:
         local-dir: ./  # Local directory to deploy
         dry-run: true   # Run a dry-run to test without actually uploading anything
         log-level: verbose # Use "verbose" for detailed logging
+        force: true 
