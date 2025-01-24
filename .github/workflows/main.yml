@@ -23,7 +23,7 @@ jobs:
 
     - name: Connect to MySQL and run a query
       env:
-        DB_HOST: ${{ secrets.DB_HOST }}  # e.g., voidek.com
+        DB_HOST: ${{ secrets.DB_HOST }}
         DB_NAME: ${{ secrets.DB_NAME }}
         DB_USER: ${{ secrets.DB_USER }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
