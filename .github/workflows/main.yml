@@ -20,14 +20,15 @@ jobs:
           - 3306:3306
         options: --health-cmd="mysqladmin ping -h localhost --silent" --health-interval=5s --health-timeout=3s --health-retries=3
 
+    env:
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-
-    - name: Set up PHP and MySQL
-      run: |
-        sudo apt-get update
-        sudo apt-get install mysql-client
 
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
@@ -35,6 +36,36 @@ jobs:
         php-version: '8.2'
         extensions: mbstring, intl, bcmath, xdebug, mysqli
         coverage: xdebug
+    
+    - name: Install MySQL Client
+      run: sudo apt-get install mysql-client -y
+    
+    - name: Debug MySQL Connection
+      run: |
+        echo "MySQL Host: ${DB_HOST}"
+        echo "MySQL User: ${DB_USER}"
+        echo "MySQL Database: ${DB_NAME}"
+        mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASSWORD}" -e "SHOW DATABASES;" --verbose
+
+    - name: Test MySQL Connection
+      run: |
+        echo "Testing MySQL connection..."
+        mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASSWORD}" -e "SHOW DATABASES;" || exit 1
+
+    - name: Wait for MySQL to be ready (with timeout)
+      run: |
+        MAX_TRIES=60
+        COUNT=0
+        while ! mysqladmin ping -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASSWORD}" --silent; do
+          if [ $COUNT -ge $MAX_TRIES ]; then
+            echo "MySQL did not become ready in time, exiting."
+            exit 1
+          fi
+          echo "Waiting for MySQL to be ready..."
+          sleep 3
+          COUNT=$((COUNT+1))
+        done
+        echo "MySQL is ready!"
 
     - name: Install Composer globally
       run: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -43,32 +74,39 @@ jobs:
       run: |
         composer install --no-interaction --prefer-dist
 
-    - name: List all Docker containers
+    - name: Verify PHPUnit installation
       run: |
-        docker ps -a
+        composer show phpunit/phpunit
 
-    # Download and prepare wait-for-it.sh script
-    - name: Download wait-for-it.sh script
-      run: |
-        curl -sSL https://github.com/vishnubob/wait-for-it/releases/download/v2.5.0/wait-for-it.sh -o wait-for-it.sh
-        chmod +x wait-for-it.sh   # Ensure it's executable
-        sudo apt-get install dos2unix # Install dos2unix
-        dos2unix wait-for-it.sh   # Convert Windows line endings to Unix line endings
-        cat wait-for-it.sh        # Show the contents of the script (to ensure it's downloaded properly)
+    - name: Check if Xdebug is enabled
+      run: php -m | grep xdebug
 
-    # Wait for MySQL to be ready
-    - name: Wait for MySQL to be ready
+    - name: Fix execute permissions for PHPUnit
       run: |
-        while ! mysqladmin ping -h"127.0.0.1" --silent; do
-          echo "Waiting for MySQL to be ready..."
-          sleep 3
+        chmod +x vendor/bin/phpunit  
+
+    - name: Validate PHP syntax for all PHP files
+      run: |
+        echo "Checking PHP syntax for all PHP files..."
+        for file in $(find ./app -type f -name "*.php"); do
+          php -l $file
+          if [ $? -ne 0 ]; then
+            echo "Syntax error in $file. Exiting."
+            exit 1
+          fi
         done
-        echo "MySQL is ready!"
+
+    - name: List tests
+      run: vendor/bin/phpunit --configuration phpunit.xml --list-tests
 
     - name: Run PHPUnit tests with code coverage report
       run: |
         mkdir -p artifacts-coverage-report
         vendor/bin/phpunit --configuration phpunit.xml --coverage-clover artifacts-coverage-report/coverage-report.xml --stop-on-failure || exit 1
+
+    - name: Generate and Download Coverage Report
+      run: |
+        php public/custom-script/generate_coverage_report.php
 
     - name: Upload code coverage report
       if: success()
@@ -76,3 +114,35 @@ jobs:
       with:
         name: artifacts-coverage-report
         path: artifacts-coverage-report/**
+
+    - name: Commit and Push Coverage Report to Repository
+      if: success()
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git remote set-url origin https://${GITHUB_TOKEN}@github.com/kalpanavasava/demo_project_cicd.git
+        git add artifacts-coverage-report/
+        git commit -m "Add code coverage report [skip ci]"
+        git push 
+
+  web-deploy:
+    name: Deploy
+    needs: web-build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Get latest code
+      uses: actions/checkout@v2
+
+    - name: Sync files to server
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.ftp_server }}
+        username: ${{ secrets.ftp_username }}
+        password: ${{ secrets.ftp_password }}
+        server-dir: /public_html/demo_project_cicd/
+        local-dir: ./  # Local directory to deploy
+        dry-run: true   # Run a dry-run to test without actually uploading anything
+        log-level: verbose # Use "verbose" for detailed logging
