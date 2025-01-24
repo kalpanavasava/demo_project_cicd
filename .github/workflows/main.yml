@@ -10,16 +10,6 @@ jobs:
     name: Build and Test
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-          MYSQL_DATABASE: demo_project_cicd
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping -h localhost --silent" --health-interval=5s --health-timeout=3s --health-retries=3
-
     env:
       DB_HOST: ${{ secrets.DB_HOST }}
       DB_USER: ${{ secrets.DB_USER }}
@@ -48,9 +38,14 @@ jobs:
         mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASSWORD}" -e "SHOW DATABASES;" --verbose
 
     - name: Test MySQL Connection
-      run: |
-        echo "Testing MySQL connection..."
-        mysql -h"${DB_HOST}" -u"${DB_USER}" -p"${DB_PASSWORD}" -e "SHOW DATABASES;" || exit 1
+      env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          # Force TCP connection and specify port
+          mysql --protocol=tcp -h $DB_HOST -P 3306 -u $DB_USER -p$DB_PASSWORD $DB_NAME -e "SHOW DATABASES;"
 
     - name: Wait for MySQL to be ready (with timeout)
       run: |
