@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1737703999">
-  <project timestamp="1737703999">
+<coverage generated="1737704277">
+  <project timestamp="1737704277">
     <package name="App\Controllers">
       <file name="/home/runner/work/demo_project_cicd/demo_project_cicd/app/controllers/UserController.php">
         <class name="App\Controllers\UserController" namespace="App\Controllers">
