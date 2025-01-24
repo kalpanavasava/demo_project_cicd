@@ -137,7 +137,7 @@ jobs:
         server: ${{ secrets.ftp_server }}
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
-        server-dir: /public_html/demo_project_cicd/
+        # server-dir: /public_html/demo_project_cicd/
         local-dir: ./
         dry-run: false
         log-level: verbose
