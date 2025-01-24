@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1737702260">
+  <project timestamp="1737702260">
+    <package name="App\Controllers">
+      <file name="/home/runner/work/demo_project_cicd/demo_project_cicd/app/controllers/UserController.php">
+        <class name="App\Controllers\UserController" namespace="App\Controllers">
+          <metrics complexity="12" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="33" coveredstatements="0" elements="36" coveredelements="0"/>
+        </class>
+        <line num="12" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="14" type="stmt" count="0"/>
+        <line num="15" type="stmt" count="0"/>
+        <line num="18" type="method" name="handleRegistration" visibility="public" complexity="10" crap="110" count="0"/>
+        <line num="20" type="stmt" count="0"/>
+        <line num="21" type="stmt" count="0"/>
+        <line num="23" type="stmt" count="0"/>
+        <line num="24" type="stmt" count="0"/>
+        <line num="25" type="stmt" count="0"/>
+        <line num="26" type="stmt" count="0"/>
+        <line num="27" type="stmt" count="0"/>
+        <line num="28" type="stmt" count="0"/>
+        <line num="29" type="stmt" count="0"/>
+        <line num="30" type="stmt" count="0"/>
+        <line num="33" type="stmt" count="0"/>
+        <line num="34" type="stmt" count="0"/>
+        <line num="35" type="stmt" count="0"/>
+        <line num="38" type="stmt" count="0"/>
+        <line num="39" type="stmt" count="0"/>
+        <line num="40" type="stmt" count="0"/>
+        <line num="41" type="stmt" count="0"/>
+        <line num="42" type="stmt" count="0"/>
+        <line num="43" type="stmt" count="0"/>
+        <line num="44" type="stmt" count="0"/>
+        <line num="45" type="stmt" count="0"/>
+        <line num="46" type="stmt" count="0"/>
+        <line num="49" type="stmt" count="0"/>
+        <line num="50" type="stmt" count="0"/>
+        <line num="51" type="stmt" count="0"/>
+        <line num="55" type="stmt" count="0"/>
+        <line num="56" type="stmt" count="0"/>
+        <line num="57" type="stmt" count="0"/>
+        <line num="59" type="stmt" count="0"/>
+        <line num="64" type="stmt" count="0"/>
+        <line num="67" type="method" name="getUsers" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="69" type="stmt" count="0"/>
+        <metrics loc="72" ncloc="70" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="33" coveredstatements="0" elements="36" coveredelements="0"/>
+      </file>
+    </package>
+    <package name="App\Models">
+      <file name="/home/runner/work/demo_project_cicd/demo_project_cicd/app/models/User.php">
+        <class name="App\Models\User" namespace="App\Models">
+          <metrics complexity="8" methods="4" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="21" coveredstatements="18" elements="25" coveredelements="21"/>
+        </class>
+        <line num="9" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="5"/>
+        <line num="11" type="stmt" count="5"/>
+        <line num="14" type="method" name="checkIfEmailExists" visibility="public" complexity="1" crap="1" count="2"/>
+        <line num="16" type="stmt" count="2"/>
+        <line num="17" type="stmt" count="2"/>
+        <line num="18" type="stmt" count="2"/>
+        <line num="21" type="stmt" count="2"/>
+        <line num="24" type="method" name="registerUser" visibility="public" complexity="5" crap="5" count="5"/>
+        <line num="27" type="stmt" count="5"/>
+        <line num="28" type="stmt" count="1"/>
+        <line num="32" type="stmt" count="4"/>
+        <line num="33" type="stmt" count="1"/>
+        <line num="37" type="stmt" count="3"/>
+        <line num="38" type="stmt" count="1"/>
+        <line num="42" type="stmt" count="2"/>
+        <line num="43" type="stmt" count="1"/>
+        <line num="47" type="stmt" count="2"/>
+        <line num="50" type="stmt" count="2"/>
+        <line num="51" type="stmt" count="2"/>
+        <line num="54" type="stmt" count="2"/>
+        <line num="57" type="stmt" count="2"/>
+        <line num="60" type="method" name="getAllUsers" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="62" type="stmt" count="0"/>
+        <line num="63" type="stmt" count="0"/>
+        <line num="64" type="stmt" count="0"/>
+        <metrics loc="67" ncloc="58" classes="1" methods="4" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="21" coveredstatements="18" elements="25" coveredelements="21"/>
+      </file>
+    </package>
+    <file name="/home/runner/work/demo_project_cicd/demo_project_cicd/app/views/users_registration.php">
+      <line num="1" type="stmt" count="0"/>
+      <line num="2" type="stmt" count="0"/>
+      <line num="3" type="stmt" count="0"/>
+      <line num="4" type="stmt" count="0"/>
+      <line num="5" type="stmt" count="0"/>
+      <line num="6" type="stmt" count="0"/>
+      <line num="7" type="stmt" count="0"/>
+      <line num="8" type="stmt" count="0"/>
+      <line num="9" type="stmt" count="0"/>
+      <line num="10" type="stmt" count="0"/>
+      <line num="11" type="stmt" count="0"/>
+      <line num="12" type="stmt" count="0"/>
+      <line num="13" type="stmt" count="0"/>
+      <line num="14" type="stmt" count="0"/>
+      <line num="15" type="stmt" count="0"/>
+      <line num="16" type="stmt" count="0"/>
+      <line num="17" type="stmt" count="0"/>
+      <line num="19" type="stmt" count="0"/>
+      <line num="20" type="stmt" count="0"/>
+      <line num="21" type="stmt" count="0"/>
+      <line num="22" type="stmt" count="0"/>
+      <line num="23" type="stmt" count="0"/>
+      <line num="24" type="stmt" count="0"/>
+      <line num="25" type="stmt" count="0"/>
+      <line num="31" type="stmt" count="0"/>
+      <line num="37" type="stmt" count="0"/>
+      <line num="90" type="stmt" count="0"/>
+      <line num="91" type="stmt" count="0"/>
+      <line num="92" type="stmt" count="0"/>
+      <line num="93" type="stmt" count="0"/>
+      <line num="94" type="stmt" count="0"/>
+      <line num="95" type="stmt" count="0"/>
+      <line num="96" type="stmt" count="0"/>
+      <line num="97" type="stmt" count="0"/>
+      <line num="98" type="stmt" count="0"/>
+      <line num="99" type="stmt" count="0"/>
+      <line num="100" type="stmt" count="0"/>
+      <line num="103" type="stmt" count="0"/>
+      <line num="104" type="stmt" count="0"/>
+      <line num="105" type="stmt" count="0"/>
+      <line num="107" type="stmt" count="0"/>
+      <line num="108" type="stmt" count="0"/>
+      <metrics loc="109" ncloc="108" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="0" elements="42" coveredelements="0"/>
+    </file>
+    <metrics files="3" loc="248" ncloc="236" classes="2" methods="7" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="96" coveredstatements="18" elements="103" coveredelements="21"/>
+  </project>
+</coverage>
