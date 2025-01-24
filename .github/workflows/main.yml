@@ -43,9 +43,9 @@ jobs:
           DB_NAME: ${{ secrets.DB_NAME }}
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        run: |
-          # Force TCP connection and specify port
-          mysql --protocol=tcp -h $DB_HOST -P 3306 -u $DB_USER -p$DB_PASSWORD $DB_NAME -e "SHOW DATABASES;"
+      run: |
+        # Force TCP connection and specify port
+        mysql --protocol=tcp -h $DB_HOST -P 3306 -u $DB_USER -p$DB_PASSWORD $DB_NAME -e "SHOW DATABASES;"
 
     - name: Wait for MySQL to be ready (with timeout)
       run: |
