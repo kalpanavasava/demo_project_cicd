@@ -1,4 +1,5 @@
 <?php
+require_once 'config/config.php';
 
 use PHPUnit\Framework\TestCase;
 
@@ -9,13 +10,8 @@ class DatabaseConnectionTest extends TestCase
     /* Setup method to initialize the connection */
     protected function setUp(): void
     {
-        $servername = "184.168.102.106";
-        $username = "demo_project_cicd";
-        $password = "C]3*]9I23sFa";
-        $dbname = "demo_project_cicd";
-
         // Create connection
-        $this->conn = mysqli_connect($servername, $username, $password, $dbname);
+        $this->conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     }
 
     /* Test if the connection is established successfully */

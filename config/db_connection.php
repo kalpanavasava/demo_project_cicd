@@ -1,9 +1,7 @@
 <?php 
-$servername = "184.168.102.106";
-$username = "demo_project_cicd";
-$password = "C]3*]9I23sFa";
-$dbname = "demo_project_cicd";
-$conn = mysqli_connect($servername, $username, $password, $dbname);
+include '../config/config.php';
+
+$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 if( !$conn ){
     die('Connection failed : ' . mysqli_connect_error());
 }else{

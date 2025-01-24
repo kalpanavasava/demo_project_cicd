@@ -1,4 +1,5 @@
 <?php
+require_once 'config/config.php';
 
 use PHPUnit\Framework\TestCase;
 use App\Models\User;
@@ -10,12 +11,7 @@ class UserRegistrationTest extends TestCase
     // Setup method to initialize the database connection or mock it
     protected function setUp(): void
     {
-        $servername = "184.168.102.106";
-        $username = "demo_project_cicd";
-        $password = "C]3*]9I23sFa";
-        $dbname = "demo_project_cicd";
-
-        $this->conn = new mysqli($servername, $username, $password, $dbname);
+        $this->conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
         if($this->conn->connect_error){
             $this->fail("Connection failed: " . $this->conn->connect_error);
         }
