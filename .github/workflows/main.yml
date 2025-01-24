@@ -16,11 +16,16 @@ jobs:
     - name: Set up MySQL client
       run: sudo apt-get install mysql-client
 
+    - name: Check DNS resolution
+      run: |
+        nslookup voidek.com
+        curl voidek.com
+
     - name: Connect to MySQL and run a query
       env:
-        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_HOST: ${{ secrets.DB_HOST }}  # voidek.com
         DB_NAME: ${{ secrets.DB_NAME }}
         DB_USER: ${{ secrets.DB_USER }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       run: |
-        mysql -h $DB_HOST -u $DB_USER -p$DB_PASSWORD $DB_NAME -e "SHOW DATABASES;"
+        mysql -h $DB_HOST -P 2096 -u $DB_USER -p$DB_PASSWORD $DB_NAME -e "SHOW DATABASES;"
