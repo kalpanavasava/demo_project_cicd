@@ -28,4 +28,5 @@ jobs:
         DB_USER: ${{ secrets.DB_USER }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       run: |
-        mysql -h $DB_HOST -P 2096 -u $DB_USER -p$DB_PASSWORD $DB_NAME -e "SHOW DATABASES;"
+        # Force TCP connection and specify port
+        mysql --protocol=tcp -h $DB_HOST -P 2096 -u $DB_USER -p$DB_PASSWORD $DB_NAME -e "SHOW DATABASES;"
