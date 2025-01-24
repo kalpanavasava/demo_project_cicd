@@ -1,12 +1,13 @@
 {
-    "autoload": {
+  "autoload": {
       "psr-4": {
-        "App\\": "app/"
+          "App\\Models\\": "app/Models/",
+          "App\\Controllers\\": "app/Controllers/"
       }
-    },
-    "require-dev": {
-        "squizlabs/php_codesniffer": "^3.11",
-        "phpunit/php-code-coverage": "^11.0",
-        "phpunit/phpunit": "^11.5"
-    }
+  },
+  "require-dev": {
+      "squizlabs/php_codesniffer": "^3.11",
+      "phpunit/php-code-coverage": "^11.0",
+      "phpunit/phpunit": "^11.5"
   }
+}
