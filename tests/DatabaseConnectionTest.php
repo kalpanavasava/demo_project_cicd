@@ -11,7 +11,7 @@ class DatabaseConnectionTest extends TestCase
     protected function setUp(): void
     {
         // Create connection
-        $this->conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+        $this->conn = mysqli_connect(CON_DB_HOST, CON_DB_USER, CON_DB_PASSWORD, CON_DB_NAME);
     }
 
     /* Test if the connection is established successfully */
